@@ -1,4 +1,4 @@
-#Wed Dec 09 15:48:11 CST 2020
-base.0=/Users/m2m/Desktop/albert/cy/flutter/lianxi/flutter_pad_app/build/app/intermediates/dex/debug/mergeDexDebug/out/classes.dex
+#Thu Dec 17 17:32:44 CST 2020
+base.0=/Users/m2m/Desktop/albert/cy/flutter/lianxi/factory-ipad/build/app/intermediates/dex/debug/mergeDexDebug/out/classes.dex
 path.0=classes.dex
 renamed.0=classes.dex
