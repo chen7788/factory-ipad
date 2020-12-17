@@ -693,7 +693,7 @@ bool validateInput(){
     );
   }
 
-  Dialog buildPopView(String title,TurningModel model){
+   buildPopView(String title,TurningModel model){
     String name = '';
     if(title == '结束生产'){
       name = '现在是否结束生产？';
@@ -702,36 +702,59 @@ bool validateInput(){
     }else if(title == '解除'){
       name = '故障是否已处理完成？';
     }
-    return Dialog(
-      backgroundColor: Colors.white,
-      elevation: 5,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(10))),
-      child: Row(
-        children: [
-          Container(child: Text('提示'),),
-          Container(child: Text(name),),
-          Container(child: Column(
-            children: [
-              FlatButton(
-                child: Text('确定'),
-                onPressed: ()=>{
-                    if(title == '结束生产'){
-                        model.isFinish = true,
-                    }else if(title == '停止调机'){
-                        model.operating = 1,
-                    }else if(title == '解除'){
-                        model.isError = false,
-                    },
-                  _updateTurning(model)
-                },
-              ),
-              FlatButton(
-                child: Text('取消'),
-              )
-            ],
-          ))
-        ],
-      ),
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (context){
+        return Dialog(
+          backgroundColor: Colors.white,
+          elevation: 5,
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(10))),
+          child: Container(
+            height: 400,
+            width: 600,
+            child: Column(
+              children: [
+                Container(margin: EdgeInsets.only(top: 30,bottom: 30),child: Text('提示',style: constants.style30),),
+                Container(margin: EdgeInsets.only(top: 30,bottom: 30),child: Text(name,style: constants.style20)),
+                Container(margin: EdgeInsets.only(top: 30),child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    FlatButton(
+                      child: Container(width: 200,height: 60,child: Center(child: Text('确定',style: constants.style30),),decoration: BoxDecoration(
+                          border: Border.all(width: 1,color: Colors.blue),
+                          borderRadius:BorderRadius.all(Radius.circular(10)),
+                          color: Colors.blue
+                      )),
+                      onPressed: ()=>{
+                        if(title == '结束生产'){
+                          model.isFinish = true,
+                        }else if(title == '停止调机'){
+                          model.operating = 1,
+                        }else if(title == '解除'){
+                          model.isError = false,
+                        },
+                        _updateTurning(model),
+                      Navigator.pop(context)
+                      },
+                    ),
+                    FlatButton(
+                      child:Container(width: 200,height: 60,child: Center(child: Text('取消',style: constants.style30),),decoration: BoxDecoration(
+                          border: Border.all(width: 1,color: Colors.blue),
+                          borderRadius:BorderRadius.all(Radius.circular(10)),
+                          color: Colors.blue
+                      )),
+                      onPressed: (){
+                        Navigator.pop(context);
+                      },
+                    )
+                  ],
+                ))
+              ],
+            ),
+          ),
+        );
+      }
     );
   }
 
@@ -879,6 +902,9 @@ bool validateInput(){
     final result = await reportFailure(model);
     if (result != null && result.length > 0) {
       Fluttertoast.showToast(msg: result,fontSize: 13);
+      setState(() {
+        _isLeftPage = true;
+      });
       _getMachineList();
     }
   }

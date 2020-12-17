@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
-final options = BaseOptions(baseUrl: "http://192.168.70.12:8080");
+final options = BaseOptions(baseUrl: "http://192.168.2.17:8080");
 
 var dio = Dio(options)
   ..interceptors.add(InterceptorsWrapper(onRequest: (RequestOptions options) {

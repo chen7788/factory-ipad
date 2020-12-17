@@ -9,6 +9,12 @@ import 'package:flutter_pad_app/model/turning_model.dart';
 import 'dio_util.dart';
 import 'dart:convert' as JSON;
 
+//登录
+Future<String> loginRequest(String account,String pwd) async{
+  Response<Map<String, dynamic>> res = await dio.post('/user/selectByNameAndPassword',data: {'name':account,'password':pwd});
+  final result = res.data['message'] as String;
+  return result;
+}
 //获取下拉列表
 Future<List<DropModel>> getDropList() async{
   Response<Map<String, dynamic>> res = await dio.post('/machineInfo/selectMachineInfo',data: null);

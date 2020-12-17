@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_pad_app/login_page.dart';
 
 import 'auto_size/auto_size.dart';
 import 'home_page.dart';
@@ -34,7 +35,7 @@ class MyApp extends StatelessWidget {
         // closer together (more dense) than on mobile platforms.
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: HomePage(),
+      home: LoginPage(),
     );
   }
 }
