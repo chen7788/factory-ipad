@@ -6,12 +6,13 @@ import 'package:flutter_pad_app/model/failure_info.dart';
 import 'package:flutter_pad_app/model/product_info.dart';
 import 'package:flutter_pad_app/model/report_model.dart';
 import 'package:flutter_pad_app/model/turning_model.dart';
+import 'package:flutter_pad_app/util/custom_behavior.dart';
 import 'package:flutter_pad_app/util/mold_respository.dart';
 import 'package:flutter_pad_app/util/network_util.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'util/const_number.dart' as constants;
 import 'dart:convert' as JSON;
-
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -21,6 +22,8 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
 
+  RefreshController _refreshController =
+  RefreshController(initialRefresh: false);
   var _machineValue;
   var _turningValue;
   var _produceValue;
@@ -110,7 +113,7 @@ class _HomePageState extends State<HomePage> {
             color: Colors.white,
             child:  Column(
               children: <Widget>[
-                buildHeader(true),
+                buildHeader(true,'调机'),
                 buildDrop('机台'),
                 buildText(true,'品名',productController,'',false),
                 buildText(false,'用料',null,_productInfo !=null?_productInfo.material:'',false),
@@ -142,35 +145,43 @@ class _HomePageState extends State<HomePage> {
         ),
         Expanded(
           flex: 2,
-          child: Container(
-            height: MediaQuery.of(context).size.height*MediaQuery.of(context).devicePixelRatio-50,
-            child: Column(
-              children: <Widget>[
-                buildHeader(false),
-                Container(
-                  padding: EdgeInsets.only(left: 10,top: 10,right: 10,bottom: 20),
-                  child: Table(columnWidths: const<int, TableColumnWidth>{
-                    0:FixedColumnWidth(220.0),
-                    2:FixedColumnWidth(130.0),
-                    3:FixedColumnWidth(180.0),
-                    4:FixedColumnWidth(180.0),
-                  },
-                    defaultVerticalAlignment: TableCellVerticalAlignment.middle,
-                    border: TableBorder.all(color: Colors.black,width: 1.0,style: BorderStyle.solid),
-                    children: buildItemList(),
-                )
-                )
-              ],
-            ),
-            color: Colors.white,
-          ),
+          child:Container(color: Colors.white
+              ,child:
+          Column(children: [
+            buildHeader(true,'调机列表'),
+            buildTable(true),
+            Expanded(child: ScrollConfiguration(
+              behavior: OverScrollBehavior(),
+              child: SmartRefresher(
+                enablePullDown: true,
+                controller: _refreshController,
+                onRefresh: _onRefresh,
+                header: WaterDropHeader(),
+                child:SingleChildScrollView(
+                  child: buildTable(false),
+                ),),
+            )
+            )
+          ],)
         ),
+        )
       ],
+    );
+  }
+  Table buildTable(bool isTitle){
+    return  Table(columnWidths: const<int, TableColumnWidth>{
+      0:FixedColumnWidth(220.0),
+      2:FixedColumnWidth(130.0),
+      3:FixedColumnWidth(180.0),
+      4:FixedColumnWidth(180.0),
+    },
+      defaultVerticalAlignment: TableCellVerticalAlignment.middle,
+      border: TableBorder.all(color: Colors.black,width: 1.0,style: BorderStyle.solid),
+      children: isTitle?[buildTableRow(null)]:buildItemList(),
     );
   }
   List<TableRow> buildItemList(){
     List<TableRow> list = List();
-    list.add(buildTableRow(null));
     if(_turningList == null){
       return list;
     }
@@ -185,8 +196,8 @@ class _HomePageState extends State<HomePage> {
           buildTableCell(model==null?'机台编号':model.machineCode, model==null?true:false),
           buildTableCell(model==null?'品号':model.proName, model==null?true:false),
           buildTableCell(model==null?'可用穴数':model.useCavityQty.toString(), model==null?true:false),
-          buildTableCellButton('操作',model, model==null?true:false),
-          buildTableCellButton('故障',model, model==null?true:false),
+          buildTableCellButton('操作',model),
+          buildTableCellButton('故障',model),
         ]
     );
   }
@@ -334,12 +345,9 @@ class _HomePageState extends State<HomePage> {
   Widget buildTableCell(String name,bool isTitle){
    return Container(height: 55,child: Center(child: Text(name,style: constants.style20)),color: isTitle?Colors.grey:Colors.white);
   }
-  Widget buildTableCellButton(String name,TurningModel model,bool isTitle){
-    if(isTitle){
-      return Container(height: 55,child: Center(child: Text(name,style: constants.style20)),color: isTitle?Colors.grey:Colors.white);
-    }
+  Widget buildTableCellButton(String name,TurningModel model){
     if(model == null){
-      return Text('');
+      return Container(height: 55,child: Center(child: Text(name,style: constants.style20)),color: model == null?Colors.grey:Colors.white);
     }
     String title = '';
     if(name == '操作'){
@@ -384,8 +392,8 @@ class _HomePageState extends State<HomePage> {
    }
    return 250;
   }
-  Widget buildHeader(bool isBottom){
-    return Container(margin: EdgeInsets.only(bottom: isBottom?15:0),height: 50,alignment: Alignment.center,width: double.infinity,color: Colors.blue,child: Text('调机',style:constants.style20));
+  Widget buildHeader(bool isBottom,String title){
+    return Container(margin: EdgeInsets.only(bottom: isBottom?15:0),height: 50,alignment: Alignment.center,width: double.infinity,color: Colors.blue,child: Text(title,style:constants.style20));
   }
   Widget buildTextAndTextF(){
     return Container(
@@ -864,7 +872,9 @@ bool validateInput(){
       for(TurningModel item in _turningList){
         TurningModel temp = result[0];
         if(item.id == temp.id){
-          list.add(temp);
+          if(!item.isFinish){
+            list.add(temp);
+          }
         }else{
           list.add(item);
         }
@@ -908,7 +918,12 @@ bool validateInput(){
       _getMachineList();
     }
   }
-
+  void _onRefresh() async {
+    // monitor network fetch
+   await _getMachineList();
+    // if failed,use refreshFailed()
+    _refreshController.refreshCompleted();
+  }
   @override
   void dispose(){
     connectivityDispose();
