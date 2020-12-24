@@ -2,6 +2,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_pad_app/model/drop_model.dart';
 import 'package:flutter_pad_app/model/failure_info.dart';
+import 'package:flutter_pad_app/model/material_model.dart';
 import 'package:flutter_pad_app/model/person_info.dart';
 import 'package:flutter_pad_app/model/product_info.dart';
 import 'package:flutter_pad_app/model/report_model.dart';
@@ -21,7 +22,12 @@ Future<List<DropModel>> getDropList() async{
   final result = res.data['data'] as List<dynamic>;
   return result.map((item) => DropModel.fromJsonMap(item)).toList();
 }
-
+//获取下拉列表
+Future<List<MaterialModel>> getMaterialList(String materialId) async{
+  Response<Map<String, dynamic>> res = await dio.post('/material/selectMaterial?proId='+materialId,data: {"proId":materialId});
+  final result = res.data['data'] as List<dynamic>;
+  return result.map((item) => MaterialModel.fromJsonMap(item)).toList();
+}
 //获取品名下拉列表
 Future<List<ProductInfo>> getProductList(String model) async{
   Response<Map<String, dynamic>> res = await dio.post('/productInfo/selectProductInfo',data: {"proName":model});

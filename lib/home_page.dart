@@ -27,12 +27,14 @@ class _HomePageState extends State<HomePage> {
   var _machineValue;
   var _turningValue;
   var _produceValue;
+  var _materialValue;
   var _autoCheckValue=false;
   List<DropModel> _machineDropList;
   List _personDropList;
   List _productList;
   ProductInfo _productInfo;
   List _turningList;
+  List _materialList;
   final productController = TextEditingController();
   final holesController = TextEditingController();
   final cycleController = TextEditingController();
@@ -116,7 +118,8 @@ class _HomePageState extends State<HomePage> {
                 buildHeader(true,'调机'),
                 buildDrop('机台'),
                 buildText(true,'品名',productController,'',false),
-                buildText(false,'用料',null,_productInfo !=null?_productInfo.material:'',false),
+                buildDrop('用料'),
+                // buildText(false,'用料',null,_productInfo !=null?_productInfo.material:'',false),
                 buildText(false,'模号',null,_productInfo !=null?_productInfo.mouldCode:'',false),
                 buildText(false,'穴数',null,_productInfo !=null?_productInfo.stdCavityQty.toString():'',false),
                 buildText(false,'生产穴数',holesController,'',true),
@@ -470,6 +473,7 @@ class _HomePageState extends State<HomePage> {
             onSelected: (result) {
                 productController.text = result;
                 if(_productList != null){
+                  _materialSelectedData(result);
                   for(ProductInfo product in _productList){
                     if(product.proName == result){
                       setState(() {
@@ -541,6 +545,7 @@ bool validateInput(){
                       height: 60,
                     ),
                     onPressed: (){
+                      _materialSelectedData(productInfoList[index].proName);
                       Navigator.of(context).pop();
                       setState(() {
                         productController.text = productInfoList[index].proName;
@@ -609,9 +614,18 @@ bool validateInput(){
            list.add(dropdownMenuItem);
          });
        }
+     }else if(type == '用料'){
+       if(_materialList == null){
+         return list;
+       }else{
+         _materialList.forEach((element) {
+           DropdownMenuItem dropdownMenuItem =  DropdownMenuItem(child: Container(padding: EdgeInsets.only(left: 10),child: Text(element.materialName,style: constants.style20,)),value: element.materialName,);
+           list.add(dropdownMenuItem);
+         });
+       }
      }else{
        if(_personDropList == null){
-           return list;
+         return list;
        }else{
          _personDropList.forEach((element) {
            DropdownMenuItem dropdownMenuItem =  DropdownMenuItem(child: Container(padding: EdgeInsets.only(left: 10),child: Text(element.name,style: constants.style20,)),value: element.name,);
@@ -627,8 +641,10 @@ bool validateInput(){
       return _machineValue;
     }else if(title == '调机职员'){
      return _turningValue;
+    }else if(title == '生产职员'){
+      return _produceValue;
     }else{
-     return _produceValue;
+     return _materialValue;
     }
   }
   getHintWithTitle(String title){
@@ -636,8 +652,10 @@ bool validateInput(){
       return '下拉选择机台';
     }else if(title == '调机职员'){
       return '下拉选择调机职员';
-    }else{
+    }else if(title == '生产职员'){
       return '下拉选择生产职员';
+    }else{
+      return '下拉选择用料';
     }
   }
   Widget buildDrop(String title){
@@ -658,6 +676,7 @@ bool validateInput(){
                       setState(() {
                         if(title == '机台'){
                           _machineValue = value;
+
                           if(_machineDropList != null){
                             for(DropModel model in _machineDropList){
                               if(model.machineCode == value){
@@ -670,8 +689,10 @@ bool validateInput(){
                           }
                         }else if(title == '调机职员'){
                           _turningValue = value;
-                        }else{
+                        }else if(title == '生产职员'){
                           _produceValue = value;
+                        }else{
+                          _materialValue = value;
                         }
                       });
                     }),
@@ -773,7 +794,6 @@ bool validateInput(){
     initConnectivity();
     _machineSelectedData();
     _getMachineList();
-    _faultListData();
   }
 
   _machineSelectedData()async{
@@ -788,7 +808,7 @@ bool validateInput(){
   }
   _productSelectedData(bool isKey)async{
     final result = await getProductList(productController.text);
-    if (result != null && result.length > 0) {
+    if (result != null) {
       if(isKey){
         buildDialog(result);
       }else{
@@ -802,15 +822,31 @@ bool validateInput(){
   }
   _personSelectedData()async{
     final result = await getTurningPersonList();
-    if (result != null && result.length > 0) {
+    if (result != null) {
       setState(() {
         _personDropList = result;
       });
     }
   }
+  _materialSelectedData(String materialId)async{
+    var id = 0;
+    for(ProductInfo model in _productList){
+      if(model.proName == materialId){
+        id = model.id;
+      }
+    }
+
+    final result = await getMaterialList(id.toString());
+    if (result != null) {
+      setState(() {
+        _materialList = result;
+        _materialValue = null;
+      });
+    }
+  }
   _getMachineList()async{
     final result = await getTurningList();
-    if (result != null && result.length > 0) {
+    if (result != null) {
       setState(() {
         _turningList = result;
       });
@@ -824,7 +860,7 @@ bool validateInput(){
     model.id = _productInfo.id;
     model.isAuto = _autoCheckValue;
     model.machineCode = _machineValue;
-    model.material = _productInfo.material;
+    model.material = _materialValue;
     model.proName = productController.text;
     model.proPerson = _produceValue;
     model.mouldCode = _productInfo.mouldCode;
@@ -850,10 +886,14 @@ bool validateInput(){
       Fluttertoast.showToast(msg: '请选择品名',fontSize: 13);
       return;
     }
+
     if(validateInput()){
       return;
     }
-
+    if(_materialValue == null || _materialValue == ''){
+      Fluttertoast.showToast(msg: '请选择用料',fontSize: 13);
+      return;
+    }
     if( _turningValue == null || _turningValue == ''){
       Fluttertoast.showToast(msg: '请选择调机职员',fontSize: 13);
       return;
