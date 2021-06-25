@@ -5,23 +5,21 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="057e6a3e-4d25-439f-9f25-2d8709410ac7" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/lib/util/custom_behavior.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ios/Podfile.lock" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/model/malfunction_model.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.dart_tool/package_config.json" beforeDir="false" afterPath="$PROJECT_DIR$/.dart_tool/package_config.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.dart_tool/package_config_subset" beforeDir="false" afterPath="$PROJECT_DIR$/.dart_tool/package_config_subset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.flutter-plugins-dependencies" beforeDir="false" afterPath="$PROJECT_DIR$/.flutter-plugins-dependencies" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/flutter_pad_app.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/flutter_pad_app.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.packages" beforeDir="false" afterPath="$PROJECT_DIR$/.packages" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/app/intermediates/bundle_manifest/debug/processDebugManifest/bundle-manifest/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/build/app/intermediates/bundle_manifest/debug/processDebugManifest/bundle-manifest/AndroidManifest.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/app/intermediates/flutter/debug/flutter_assets/NOTICES" beforeDir="false" afterPath="$PROJECT_DIR$/build/app/intermediates/flutter/debug/flutter_assets/NOTICES" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/app/intermediates/flutter/debug/flutter_assets/kernel_blob.bin" beforeDir="false" afterPath="$PROJECT_DIR$/build/app/intermediates/flutter/debug/flutter_assets/kernel_blob.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/app/intermediates/flutter/debug/flutter_build.d" beforeDir="false" afterPath="$PROJECT_DIR$/build/app/intermediates/flutter/debug/flutter_build.d" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/app/intermediates/incremental/debug-mergeJavaRes/merge-state" beforeDir="false" afterPath="$PROJECT_DIR$/build/app/intermediates/incremental/debug-mergeJavaRes/merge-state" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/app/intermediates/incremental/debug-mergeNativeLibs/merge-state" beforeDir="false" afterPath="$PROJECT_DIR$/build/app/intermediates/incremental/debug-mergeNativeLibs/merge-state" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/app/intermediates/incremental/packageDebug/tmp/debug/dex-renamer-state.txt" beforeDir="false" afterPath="$PROJECT_DIR$/build/app/intermediates/incremental/packageDebug/tmp/debug/dex-renamer-state.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/app/intermediates/instant_app_manifest/debug/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/build/app/intermediates/instant_app_manifest/debug/AndroidManifest.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/app/intermediates/merged_assets/debug/out/flutter_assets/NOTICES" beforeDir="false" afterPath="$PROJECT_DIR$/build/app/intermediates/merged_assets/debug/out/flutter_assets/NOTICES" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/app/intermediates/merged_assets/debug/out/flutter_assets/kernel_blob.bin" beforeDir="false" afterPath="$PROJECT_DIR$/build/app/intermediates/merged_assets/debug/out/flutter_assets/kernel_blob.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/app/intermediates/merged_manifests/debug/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/build/app/intermediates/merged_manifests/debug/AndroidManifest.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/app/intermediates/processed_res/debug/processDebugResources/out/resources-debug.ap_" beforeDir="false" afterPath="$PROJECT_DIR$/build/app/intermediates/processed_res/debug/processDebugResources/out/resources-debug.ap_" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/app/intermediates/merged_native_libs/debug/out/lib/arm64-v8a/libflutter.so" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/app/intermediates/stripped_native_libs/debug/out/lib/arm64-v8a/libflutter.so" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/build/app/outputs/apk/debug/app-debug.apk" beforeDir="false" afterPath="$PROJECT_DIR$/build/app/outputs/apk/debug/app-debug.apk" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/app/outputs/flutter-apk/app-debug.apk" beforeDir="false" afterPath="$PROJECT_DIR$/build/app/outputs/flutter-apk/app-debug.apk" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/app/outputs/flutter-apk/app.apk" beforeDir="false" afterPath="$PROJECT_DIR$/build/app/outputs/flutter-apk/app.apk" afterDir="false" />
@@ -30,9 +28,14 @@
       <change beforePath="$PROJECT_DIR$/build/app/outputs/repo/io/flutter/plugins/connectivity/connectivity_release/maven-metadata.xml.md5" beforeDir="false" afterPath="$PROJECT_DIR$/build/app/outputs/repo/io/flutter/plugins/connectivity/connectivity_release/maven-metadata.xml.md5" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/app/outputs/repo/io/flutter/plugins/connectivity/connectivity_release/maven-metadata.xml.sha1" beforeDir="false" afterPath="$PROJECT_DIR$/build/app/outputs/repo/io/flutter/plugins/connectivity/connectivity_release/maven-metadata.xml.sha1" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/f872507f30e2ff2523f0f1d19160266e.cache.dill.track.dill" beforeDir="false" afterPath="$PROJECT_DIR$/build/f872507f30e2ff2523f0f1d19160266e.cache.dill.track.dill" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/ios/Runner.build/Release-iphoneos/Runner.build/dgph" beforeDir="false" afterPath="$PROJECT_DIR$/build/ios/Runner.build/Release-iphoneos/Runner.build/dgph" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ios/Runner.xcodeproj/project.pbxproj" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Runner.xcodeproj/project.pbxproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ios/Runner.xcworkspace/contents.xcworkspacedata" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Runner.xcworkspace/contents.xcworkspacedata" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/home_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/home_page.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/login_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/login_page.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/main.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/util/dio_util.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/util/dio_util.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/util/mold_respository.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/util/mold_respository.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -160,7 +163,21 @@
       <option name="project" value="LOCAL" />
       <updated>1608197701711</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="增加登录界面">
+      <created>1608528585792</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1608528585792</updated>
+    </task>
+    <task id="LOCAL-00005" summary="增加登录界面">
+      <created>1608780464905</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1608780464910</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -170,54 +187,61 @@
     <option name="LAST_COMMIT_MESSAGE" value="增加登录界面" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="1656" y="191" width="1590" height="823" key="AVDManager" timestamp="1608190174695">
+    <state x="1695" y="493" width="804" height="435" key="#Notifications" timestamp="1622190033884">
       <screen x="1440" y="91" width="1920" height="1057" />
     </state>
-    <state x="1656" y="191" width="1590" height="823" key="AVDManager/0.23.1440.877/1440.91.1920.1057@1440.91.1920.1057" timestamp="1608190174695" />
-    <state x="1863" y="104" key="CommitChangelistDialog2" timestamp="1608197688465">
+    <state x="1695" y="493" width="804" height="435" key="#Notifications/0.23.1440.877/1440.91.1920.1057@1440.91.1920.1057" timestamp="1622190033884" />
+    <state x="1856" y="260" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1619072191749">
       <screen x="1440" y="91" width="1920" height="1057" />
     </state>
-    <state x="1863" y="104" key="CommitChangelistDialog2/0.23.1440.877/1440.91.1920.1057@1440.91.1920.1057" timestamp="1608197688465" />
-    <state x="317" y="34" key="CommitChangelistDialog2/0.23.1440.877@0.23.1440.877" timestamp="1608173324818" />
-    <state width="1833" height="389" key="GridCell.Tab.0.bottom" timestamp="1608528553653">
+    <state x="1856" y="260" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.23.1440.877/1440.91.1920.1057@1440.91.1920.1057" timestamp="1619072191749" />
+    <state x="1553" y="193" width="1687" height="814" key="AVDManager" timestamp="1624501714327">
+      <screen x="1440" y="93" width="1920" height="1055" />
+    </state>
+    <state x="1553" y="191" width="1687" height="815" key="AVDManager/0.23.1440.877/1440.91.1920.1057@1440.91.1920.1057" timestamp="1622190948737" />
+    <state x="1553" y="193" width="1687" height="814" key="AVDManager/0.25.1440.875/1440.93.1920.1055@1440.93.1920.1055" timestamp="1624501714327" />
+    <state width="385" height="466" key="DebuggerActiveHint" timestamp="1619492985064">
       <screen x="1440" y="91" width="1920" height="1057" />
     </state>
-    <state width="1833" height="389" key="GridCell.Tab.0.bottom/0.23.1440.877/1440.91.1920.1057@1440.91.1920.1057" timestamp="1608528553653" />
-    <state width="1398" height="283" key="GridCell.Tab.0.bottom/0.23.1440.877@0.23.1440.877" timestamp="1608518365119" />
-    <state width="1833" height="389" key="GridCell.Tab.0.center" timestamp="1608528553652">
+    <state width="385" height="466" key="DebuggerActiveHint/0.23.1440.877/1440.91.1920.1057@1440.91.1920.1057" timestamp="1619492985064" />
+    <state width="1833" height="250" key="GridCell.Tab.0.bottom" timestamp="1624528388031">
+      <screen x="1440" y="93" width="1920" height="1055" />
+    </state>
+    <state width="1743" height="195" key="GridCell.Tab.0.bottom/0.23.1440.877/1440.91.1920.1057@1440.91.1920.1057" timestamp="1622191411456" />
+    <state width="1833" height="250" key="GridCell.Tab.0.bottom/0.25.1440.875/1440.93.1920.1055@1440.93.1920.1055" timestamp="1624528388031" />
+    <state width="1833" height="250" key="GridCell.Tab.0.center" timestamp="1624528388031">
+      <screen x="1440" y="93" width="1920" height="1055" />
+    </state>
+    <state width="1743" height="195" key="GridCell.Tab.0.center/0.23.1440.877/1440.91.1920.1057@1440.91.1920.1057" timestamp="1622191411455" />
+    <state width="1833" height="250" key="GridCell.Tab.0.center/0.25.1440.875/1440.93.1920.1055@1440.93.1920.1055" timestamp="1624528388031" />
+    <state width="1833" height="250" key="GridCell.Tab.0.left" timestamp="1624528388030">
+      <screen x="1440" y="93" width="1920" height="1055" />
+    </state>
+    <state width="1743" height="195" key="GridCell.Tab.0.left/0.23.1440.877/1440.91.1920.1057@1440.91.1920.1057" timestamp="1622191411455" />
+    <state width="1833" height="250" key="GridCell.Tab.0.left/0.25.1440.875/1440.93.1920.1055@1440.93.1920.1055" timestamp="1624528388030" />
+    <state width="1833" height="250" key="GridCell.Tab.0.right" timestamp="1624528388031">
+      <screen x="1440" y="93" width="1920" height="1055" />
+    </state>
+    <state width="1743" height="195" key="GridCell.Tab.0.right/0.23.1440.877/1440.91.1920.1057@1440.91.1920.1057" timestamp="1622191411456" />
+    <state width="1833" height="250" key="GridCell.Tab.0.right/0.25.1440.875/1440.93.1920.1055@1440.93.1920.1055" timestamp="1624528388031" />
+    <state x="1879" y="262" key="SettingsEditor" timestamp="1622190122878">
       <screen x="1440" y="91" width="1920" height="1057" />
     </state>
-    <state width="1833" height="389" key="GridCell.Tab.0.center/0.23.1440.877/1440.91.1920.1057@1440.91.1920.1057" timestamp="1608528553652" />
-    <state width="1398" height="283" key="GridCell.Tab.0.center/0.23.1440.877@0.23.1440.877" timestamp="1608518365119" />
-    <state width="1833" height="389" key="GridCell.Tab.0.left" timestamp="1608528553651">
+    <state x="1879" y="262" key="SettingsEditor/0.23.1440.877/1440.91.1920.1057@1440.91.1920.1057" timestamp="1622190122878" />
+    <state x="2090" y="353" width="615" height="490" key="find.popup" timestamp="1619079288287">
       <screen x="1440" y="91" width="1920" height="1057" />
     </state>
-    <state width="1833" height="389" key="GridCell.Tab.0.left/0.23.1440.877/1440.91.1920.1057@1440.91.1920.1057" timestamp="1608528553651" />
-    <state width="1398" height="283" key="GridCell.Tab.0.left/0.23.1440.877@0.23.1440.877" timestamp="1608518365118" />
-    <state width="1833" height="389" key="GridCell.Tab.0.right" timestamp="1608528553652">
+    <state x="2090" y="353" width="615" height="490" key="find.popup/0.23.1440.877/1440.91.1920.1057@1440.91.1920.1057" timestamp="1619079288287" />
+    <state x="2042" y="291" key="run.anything.popup" timestamp="1622190670572">
       <screen x="1440" y="91" width="1920" height="1057" />
     </state>
-    <state width="1833" height="389" key="GridCell.Tab.0.right/0.23.1440.877/1440.91.1920.1057@1440.91.1920.1057" timestamp="1608528553652" />
-    <state width="1398" height="283" key="GridCell.Tab.0.right/0.23.1440.877@0.23.1440.877" timestamp="1608518365119" />
-    <state x="1919" y="306" key="Vcs.Push.Dialog.v2" timestamp="1608197708403">
-      <screen x="1440" y="91" width="1920" height="1057" />
-    </state>
-    <state x="1919" y="306" key="Vcs.Push.Dialog.v2/0.23.1440.877/1440.91.1920.1057@1440.91.1920.1057" timestamp="1608197708403" />
-    <state x="359" y="201" key="Vcs.Push.Dialog.v2/0.23.1440.877@0.23.1440.877" timestamp="1608173338914" />
-    <state x="2234" y="523" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1608197455130">
-      <screen x="1440" y="91" width="1920" height="1057" />
-    </state>
-    <state x="2234" y="523" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.23.1440.877/1440.91.1920.1057@1440.91.1920.1057" timestamp="1608197455130" />
+    <state x="2042" y="291" key="run.anything.popup/0.23.1440.877/1440.91.1920.1057@1440.91.1920.1057" timestamp="1622190670572" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" suspend="THREAD" type="Dart">
-          <url>file://$PROJECT_DIR$/lib/home_page.dart</url>
-          <line>370</line>
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
-      </breakpoints>
+      <default-breakpoints>
+        <breakpoint suspend="THREAD" type="dart-exception" />
+      </default-breakpoints>
     </breakpoint-manager>
   </component>
 </project>

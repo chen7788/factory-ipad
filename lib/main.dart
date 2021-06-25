@@ -5,12 +5,13 @@ import 'package:flutter_pad_app/login_page.dart';
 import 'auto_size/auto_size.dart';
 import 'home_page.dart';
 
+
 void main() {
   AutoSizeWidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations(
       [DeviceOrientation.landscapeLeft, DeviceOrientation.landscapeRight]);
   SystemChrome.setEnabledSystemUIOverlays([]);
-  runAutoSizeApp(MyApp(), width: 1920, height: 1200);
+  runAutoSizeApp(MyApp(), width: 1920, height: 1200);//1920*1200 //1100*1000
 }
 
 class MyApp extends StatelessWidget {
