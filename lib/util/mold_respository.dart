@@ -55,19 +55,19 @@ Future<List<TurningModel>> getProductionList() async{
 }
 //获取停机时间段列表
 Future<List<MalfunctionModel>> getStopTimeList(String recordId) async{
-  Response<Map<String, dynamic>> res = await jsonDio.post('/vFault/selectByNameAndPassword',data: {"proRecordID":recordId});
+  Response<Map<String, dynamic>> res = await jsonDio.post('/vFault/selectByNameAndPassword',queryParameters: {"proRecordID":recordId});
   final result = res.data['data'] as List<dynamic>;
   return result.map((item) => MalfunctionModel.fromJsonMap(item)).toList();
 }
 //开始生产
 Future<String> startProduction(String recordId,String code) async{
-  Response<Map<String, dynamic>> res = await jsonDio.post('/productionRecord/startWorkProductionRecord',data: {"id":recordId,"machineCode":code});
+  Response<Map<String, dynamic>> res = await jsonDio.post('/productionRecord/startWorkProductionRecord',queryParameters: {"id":recordId,"machineCode":code});
   final result = res.data['message'] as String;
   return result;
 }
 //开始生产
 Future<String> stopProduction(String recordId,String code) async{
-  Response<Map<String, dynamic>> res = await jsonDio.post('/productionRecord/endWorkProductionRecord',data: {"id":recordId,"machineCode":code});
+  Response<Map<String, dynamic>> res = await jsonDio.post('/productionRecord/endWorkProductionRecord',queryParameters: {"id":recordId,"machineCode":code});
   final result = res.data['message'] as String;
   return result;
 }

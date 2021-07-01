@@ -46,7 +46,6 @@ class _HomePageState extends State<HomePage> {
   List _turningList;
   List _waitList;
   List _productionList;
-  List _stopTimeList;
   List _materialList;
   final productController = TextEditingController();
   final holesController = TextEditingController();
@@ -56,6 +55,7 @@ class _HomePageState extends State<HomePage> {
   TurningModel _turnModel;
   List<FailureInfo> _faultList;
   Map _checkMap = Map();
+  bool isSelected = false;
 
   Widget build(BuildContext context) {
     return Scaffold(
@@ -126,6 +126,10 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget buildLeftView() {
+    var mouldCode = "";
+    if (_productInfo?.mouldCode != null){
+      mouldCode = "";
+    }
     return Row(
       children: <Widget>[
         Expanded(
@@ -140,7 +144,7 @@ class _HomePageState extends State<HomePage> {
                 buildDrop('用料'),
                 // buildText(false,'用料',null,_productInfo !=null?_productInfo.material:'',false),
                 buildText(false, '模号', moldController,
-                    _productInfo != null ? _productInfo.mouldCode : '', false),
+                    _productInfo != null ? mouldCode : '', false),
                 buildText(false, '穴数', null, _productInfo != null
                     ? _productInfo.stdCavityQty.toString()
                     : '', false),
@@ -261,10 +265,10 @@ class _HomePageState extends State<HomePage> {
   Table buildTable(bool isTitle, TableType type) {
     var map = Map<int, TableColumnWidth>();
     if (type == TableType.stopTime) {
-      map[0] = FixedColumnWidth(200.0);
-      map[1] = FixedColumnWidth(200.0);
+      map[0] = FixedColumnWidth(280.0);
+      map[1] = FixedColumnWidth(270.0);
       map[2] = FixedColumnWidth(200.0);
-      map[4] = FixedColumnWidth(230.0);
+      map[4] = FixedColumnWidth(220.0);
     } else if (type == TableType.production) {
       map[0] = FixedColumnWidth(160.0);
       map[2] = FixedColumnWidth(130.0);
@@ -315,8 +319,12 @@ class _HomePageState extends State<HomePage> {
     if(model is MalfunctionModel){
       malModel = model;
     }
+    var  mouldCode = "";
+    if(turnModel?.mouldCode != null){
+      mouldCode = turnModel?.mouldCode;
+    }
 
-    if (type != TableType.stopTime) {
+    if (type == TableType.production) {
       return TableRow(
           children: [
             buildTableCell(turnModel == null ? '机台编号' : turnModel.machineCode,
@@ -326,7 +334,7 @@ class _HomePageState extends State<HomePage> {
             buildTableCell(
                 turnModel == null ? '可用穴数' : turnModel.useCavityQty.toString(),
                 turnModel == null ? true : false),
-            buildTableCell(model == null ? '模号' : turnModel.mouldCode,
+            buildTableCell(model == null ? '模号' : mouldCode,
                 turnModel == null ? true : false),
             buildTableCellButton('操作', turnModel, type),
             buildTableCellButton('故障', turnModel, type),
@@ -342,26 +350,36 @@ class _HomePageState extends State<HomePage> {
             buildTableCell(
                 turnModel == null ? '可用穴数' : turnModel.useCavityQty.toString(),
                 turnModel == null ? true : false),
-            buildTableCell(turnModel == null ? '模号' : turnModel.mouldCode,
+            buildTableCell(turnModel == null ? '模号' : mouldCode,
                 turnModel == null ? true : false),
             buildTableCellButton('操作', turnModel, type),
           ]
       );
     } else {
+
       return TableRow(
           children: [
-            buildTableCell(malModel == null ? '开始停机时间' : malModel.beginTime,
+            buildTableCell(malModel == null ? '开始停机时间' : getBeginTime(malModel.beginTime),
                 malModel == null ? true : false),
-            buildTableCell(malModel == null ? '结束停机时间' : malModel.endTime,
+            buildTableCell(malModel == null ? '结束停机时间' : getBeginTime(malModel.endTime),
                 malModel == null ? true : false),
             buildTableCell(malModel == null ? '停机时长(M)' : malModel.mi,
                 malModel == null ? true : false),
-            buildTableCell(malModel == null ? '故障' : malModel.isError,
+            buildTableCell(malModel == null ? '故障' : malModel.faultName,
                 malModel == null ? true : false),
             buildTableCellButton('操作', malModel, type),
           ]
       );
     }
+  }
+
+ String getBeginTime(String time){
+    if(time == null || time == ""){
+      return "";
+    }
+    String str1 = time.substring(0,10);
+    String str2 = time.substring(11,19);
+    return str1 + " " + str2;
   }
 
   intWithBool(bool isError) {
@@ -375,119 +393,166 @@ class _HomePageState extends State<HomePage> {
   }
 
   buildRightView() {
+
     showDialog(
         context: context,
-        barrierDismissible: false,
+        barrierDismissible: true,
         builder: (context) {
-          return Dialog(
-              backgroundColor: Colors.white,
-              elevation: 5,
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(10))),
-              child:
-              Container(
-                // height: 400,
-                // width: 600,
-                  margin: EdgeInsets.only(left: 10, right: 10, bottom: 10),
-                  child: Column(
-                    children: <Widget>[
-                      Container(
-                        margin: EdgeInsets.only(left: 20),
-                        child: Row(
-                          children: <Widget>[
-                            Text('机台', style: constants.style30),
-                            Container(
-                              height: 45,
-                              width: 300,
-                              margin: EdgeInsets.only(left: 30),
-                              alignment: Alignment.centerLeft,
-                              padding: EdgeInsets.only(left: 10),
-                              decoration: BoxDecoration(
-                                  border: Border.all(width: 1,
-                                      color: Colors.black),
-                                  color: Colors.white
-                              ),
-                              child: Text(_turnModel == null ? '' : _turnModel
-                                  .machineCode, style: constants.style30),
-                            )
-                          ],
-                        ),
-                      ),
-                      Expanded(
-                        child:
-                        ListView.builder(itemBuilder: (context, index) {
-                          return Container(
-                            margin: EdgeInsets.only(top: 10, bottom: 10),
-                            color: Colors.white,
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
+          return StatefulBuilder(
+            builder:(BuildContext context, void Function(void Function()) setState) {
+              return Dialog(
+                  backgroundColor: Colors.white,
+                  elevation: 5,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(10))),
+                  child:
+                  Container(
+                    // height: 400,
+                    // width: 600,
+                      margin: EdgeInsets.only(left: 10, right: 10, bottom: 10),
+                      child: Column(
+                        children: <Widget>[
+                          Container(
+                            height: 40,
+                            margin: EdgeInsets.only(left: 20,top: 10),
+                            child: Row(
                               children: <Widget>[
-                                Container(
-                                  margin: EdgeInsets.only(
-                                      left: 30, top: 10, bottom: 5),
-                                  height: 40,
-                                  child: Text(_faultList[index].name,
-                                      style: constants.blueStyle30),
-                                ),
-                                buildGridView(_faultList[index]),
+                                Text('异常选择', style: constants.style30),
+                                // Container(
+                                //   height: 45,
+                                //   width: 300,
+                                //   margin: EdgeInsets.only(left: 30),
+                                //   alignment: Alignment.centerLeft,
+                                //   padding: EdgeInsets.only(left: 10),
+                                //   decoration: BoxDecoration(
+                                //       border: Border.all(width: 1,
+                                //           color: Colors.black),
+                                //       color: Colors.white
+                                //   ),
+                                //   child: Text(_turnModel == null ? '' : _turnModel
+                                //       .machineCode, style: constants.style30),
+                                // )
                               ],
                             ),
-                            height: rightListViewCellHeight(
-                                _faultList[index], 6),
-                          );
-                        },
-                          itemCount: 3,
-                        ),
-                      ),
-                      Container(
-                        constraints: BoxConstraints.expand(height: 145),
-                        margin: EdgeInsets.only(top: 20),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: <Widget>[
-                            Expanded(
-                              child: Container(
-                                height: 145,
-                                margin: EdgeInsets.only(right: 100),
+                          ),
+                          Expanded(
+                            child:
+                            ListView.builder(itemBuilder: (context, index) {
+                              return Container(
+                                margin: EdgeInsets.only(top: 10),
                                 color: Colors.white,
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: <Widget>[
                                     Container(
                                       margin: EdgeInsets.only(
-                                          left: 30, top: 15),
-                                      height: 35,
-                                      child: Text(
-                                          _faultList[_faultList.length - 1]
-                                              .name,
+                                          left: 30, bottom: 10),
+                                      height: 40,
+                                      child: Text(_faultList[index].name,
                                           style: constants.blueStyle30),
                                     ),
-                                    buildGridView(
-                                        _faultList[_faultList.length - 1]),
+                                    Expanded(
+                                        child:
+                                        Container(
+                                          margin: EdgeInsets.only(left: 20, right: 20),
+                                          child: GridView.builder(
+                                            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                                                crossAxisCount: 6,
+                                                mainAxisSpacing: 13,
+                                                crossAxisSpacing: 0,
+                                                childAspectRatio: 15 / 2
+                                            ),
+                                            itemBuilder: (context, innerIndex) {
+                                              return Row(
+                                                children: <Widget>[
+                                                  Checkbox(
+                                                    value: _checkMap[_faultList[index].item[innerIndex].faultCode] ?? false,
+                                                    onChanged: (value) {
+                                                      if (value) {
+                                                        _checkMap[_faultList[index].item[innerIndex].faultCode] = value;
+                                                      } else {
+                                                        if (_checkMap.containsKey(_faultList[index].item[innerIndex].faultCode)) {
+                                                          _checkMap.remove(_faultList[index].item[innerIndex].faultCode);
+                                                        }
+                                                      }
+                                                      setState(() {
+
+                                                      });
+                                                    },
+                                                  ),
+                                                  Container(padding: EdgeInsets.zero,
+                                                      margin: EdgeInsets.zero,
+                                                      child: Text(
+                                                        _faultList[index].item[innerIndex].faultName, style: constants.style20,))
+                                                ],
+                                              );
+                                            },
+                                            itemCount: _faultList[index].item.length,
+                                            physics: NeverScrollableScrollPhysics(),),
+                                        )
+                                    ),
                                   ],
                                 ),
-                              ),
+                                height: rightListViewCellHeight(
+                                    _faultList[index], 6),
+                              );
+                            },
+                              itemCount: 4,
                             ),
-                            Container(
-                                constraints: BoxConstraints.expand(width: 160),
-                                child: FlatButton(
-                                  child: Text('提交', style: constants.style30,),
-                                  onPressed: () {
-                                    _reportFault();
-                                  },
-                                ),
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.all(Radius
-                                        .circular(5)),
-                                    color: Colors.white
-                                )
-                            )
-                          ],
-                        ),
+                          ),
+                          // Container(
+                          //   constraints: BoxConstraints.expand(height: 135),
+                          //   margin: EdgeInsets.only(top: 20),
+                          //   child: Row(
+                          //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          //     children: <Widget>[
+                          //       Expanded(
+                          //         child: Container(
+                          //           height: 135,
+                          //           margin: EdgeInsets.only(right: 100),
+                          //           color: Colors.black,
+                          //           child: Column(
+                          //             crossAxisAlignment: CrossAxisAlignment.start,
+                          //             children: <Widget>[
+                          //               Container(
+                          //                 margin: EdgeInsets.only(
+                          //                     left: 30, top: 15),
+                          //                 height: 35,
+                          //                 child: Text(
+                          //                     _faultList[_faultList.length - 1]
+                          //                         .name,
+                          //                     style: constants.blueStyle30),
+                          //               ),
+                          //               buildGridView(
+                          //                   _faultList[_faultList.length - 1]),
+                          //             ],
+                          //           ),
+                          //         ),
+                          //       ),
+                          //
+                          //     ],
+                          //   ),
+                          // ),
+                          Container(
+                              margin: EdgeInsets.only(top: 10),
+                              constraints: BoxConstraints.expand(height: 60),
+                              child: FlatButton(
+                                child: Text('提交', style: constants.style30,),
+                                onPressed: () {
+                                  _reportFault();
+                                },
+                              ),
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.all(Radius
+                                      .circular(5)),
+                                  color: Colors.grey
+                              )
+                          )
+                        ],
                       )
-                    ],
                   )
-              )
+              );
+            }
           );
         }
     );
@@ -517,8 +582,7 @@ class _HomePageState extends State<HomePage> {
               return Row(
                 children: <Widget>[
                   Checkbox(
-                    value: _checkMap[info.item[index].faultCode] != null ? info
-                        .item[index].isCheck : false,
+                    value: isSelected,
                     onChanged: (value) {
                       if (value) {
                         _checkMap[info.item[index].faultCode] = value;
@@ -527,8 +591,9 @@ class _HomePageState extends State<HomePage> {
                           _checkMap.remove(info.item[index].faultCode);
                         }
                       }
+                      isSelected = value;
                       setState(() {
-                        info.item[index].isCheck = value;
+
                       });
                     },
                   ),
@@ -547,7 +612,7 @@ class _HomePageState extends State<HomePage> {
 
   Widget buildTableCell(String name, bool isTitle) {
     return Container(height: isTitle ? 60 : 55,
-        child: Center(child: Text(name, style: constants.style20)),
+        child: Center(child: Text(name==null?"":name, style: constants.style20)),
         color: isTitle ? Colors.grey : Colors.white);
   }
 
@@ -571,19 +636,27 @@ class _HomePageState extends State<HomePage> {
     var btnColor = Colors.white;
     if (name == '操作') {
       if (type == TableType.stopTime) {
-        if(malModel.isError){
-          title = '解除';
-        }else {
+        // if(malModel.isError){
+        //   title = '解除';
+        // }else {
           title = '提报';
-        }
+        // }
         btnColor = Colors.grey;
-      } else {
+      } else if (type == TableType.production){
         if (turnModel.operating == 1) {
           title = '结束生产';
           btnColor = Colors.green;
         } else {
           title = '开始生产';
           btnColor = Colors.red;
+        }
+      }else{
+        if (turnModel.isProing) {
+          title = '结束生产';
+          btnColor = Colors.red;
+        } else {
+          title = '安排生产';
+          btnColor = Colors.green;
         }
       }
     } else {
@@ -604,20 +677,28 @@ class _HomePageState extends State<HomePage> {
                 borderRadius: BorderRadius.all(Radius.circular(10)),
                 color: btnColor
             )), onTap: () {
-          if (title == '停机时间段') {
-            _loadStopTimeList(turnModel.id.toString());
-          } else {
-            buildPopView(title, turnModel, type);
-          }
+            if (title == '停机时间段') {
+              _turnModel = turnModel;
+              _loadStopTimeList(turnModel.id.toString(),true);
+            }else if(title == "提报"){
+
+              _checkMap.clear();
+                _faultListData();
+
+            }else if(title == "异常"){
+
+            }else{
+              buildPopView(title, turnModel, type);
+            }
+
           //
           // if(title == '停机时间段'){
-          //   // _turnModel = model;
-          //   // _checkMap.clear();
+          //
           //   // setState(() {
           //   //   _isLeftPage = false;
           //   // });
           //   // if(_faultList == null){
-          //   //   _faultListData();
+          //
           //   // }
           //
           // }else{
@@ -631,7 +712,7 @@ class _HomePageState extends State<HomePage> {
   buildStopTimeView() {
     showDialog(
         context: context,
-        barrierDismissible: false,
+        barrierDismissible: true,
         builder: (context) {
           return Dialog(
               backgroundColor: Colors.white,
@@ -671,9 +752,9 @@ class _HomePageState extends State<HomePage> {
     int row = count ~/ col;
     int num = count % col;
     if (row == 3 && num > 0) {
-      return 300;
+      return 280;
     }
-    return 250;
+    return 230;
   }
 
   Widget buildHeader(bool isBottom, String title) {
@@ -1097,6 +1178,8 @@ class _HomePageState extends State<HomePage> {
       name = '现在是否开始生产？';
     } else if (title == '解除') {
       name = '故障是否已处理完成？';
+    }else if (title == '安排生产') {
+      name = '现在是否安排生产？';
     }
     showDialog(
         context: context,
@@ -1136,26 +1219,31 @@ class _HomePageState extends State<HomePage> {
                           if(type == TableType.production){
                             if(title == '结束生产'){
                               model.isFinish = true,
-                            } else
-                              if(title == '开始生产'){
-                                model.operating = 1,
-                              } else
-                                if(title == '解除'){
-                                  model.isError = false,
-                                },
+                            } else if(title == '开始生产'){
+                                model.operating = 1
+                              },
                             _updateTurning(model, title),
                             Navigator.pop(context)
                           } else
                             if (type == TableType.waitProduction){
-                              _loadStartProduction(
-                                  model.id.toString(), model.machineCode),
-                              Navigator.pop(context)
-                            } else
-                              {
-                                _loadStopProduction(
+                              if(title == '安排生产'){
+                                _loadStartProduction(
                                     model.id.toString(), model.machineCode),
                                 Navigator.pop(context)
-                              }
+                              } else
+                                if(title == '结束生产'){
+                                  _loadStopProduction(
+                                      model.id.toString(), model.machineCode),
+                                  Navigator.pop(context)
+                                }
+
+                            }else{
+                              if(title == '解除'){
+                                  _turnModel.isError = false,
+                                _updateTurning(_turnModel, title),
+                                Navigator.pop(context)
+                              },
+                            }
                         },
                       ),
                       FlatButton(
@@ -1267,16 +1355,18 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
-  _loadStopTimeList(String recordId) async {
+  _loadStopTimeList(String recordId,bool isPop) async {
     final result = await getStopTimeList(recordId);
     if (result != null) {
-      _stopTimeList = result;
-      buildStopTimeView();
-      //   setState(() {
-      //     _turningList = result;
-      //   });
-      //   _machineSelectedData();
-      // }
+      if(isPop){
+        buildStopTimeView();
+      }
+      _turningList = result;
+      if(!isPop){
+        setState(() {
+
+        });
+      }
     }
   }
     _getStartTurning() async {
@@ -1354,26 +1444,29 @@ class _HomePageState extends State<HomePage> {
       }
     }
     _loadStartProduction(String recordId, String code) async {
-      Fluttertoast.showToast(msg: '操作成功...', fontSize: 13);
+
       final result = await startProduction(recordId, code);
       if (result != null && result.length > 0) {
+        Fluttertoast.showToast(msg: '操作成功...', fontSize: 13);
         for (TurningModel item in _waitList) {
           TurningModel temp = _waitList[0];
           if (item.id == temp.id) {
-            item.operating = 1;
+            _waitList.remove(item);
             break;
           }
         }
+        _getMachineList();
         setState(() {
-          _turningList = _waitList;
+          _isLeftPage = true;
         });
         //_machineSelectedData();
       }
     }
     _loadStopProduction(String recordId, String code) async {
-      Fluttertoast.showToast(msg: '操作成功...', fontSize: 13);
+
       final result = await stopProduction(recordId, code);
       if (result != null && result.length > 0) {
+        Fluttertoast.showToast(msg: '操作成功...', fontSize: 13);
         for (TurningModel item in _waitList) {
           TurningModel temp = _waitList[0];
           if (item.id == temp.id) {
@@ -1390,12 +1483,12 @@ class _HomePageState extends State<HomePage> {
     _faultListData() async {
       final result = await getFailureList();
       if (result != null && result.length > 0) {
-        setState(() {
-          _faultList = result;
-        });
+        _faultList = result;
+        buildRightView();
       }
     }
     _reportFault() async {
+
       if (_checkMap.length == 0 || _checkMap.keys.length == 0) {
         Fluttertoast.showToast(msg: '请选择故障类型', fontSize: 13);
         return;
@@ -1413,10 +1506,9 @@ class _HomePageState extends State<HomePage> {
       final result = await reportFailure(model);
       if (result != null && result.length > 0) {
         Fluttertoast.showToast(msg: result, fontSize: 13);
-        setState(() {
-          _isLeftPage = true;
-        });
-        _getMachineList();
+        Navigator.of(context).pop('确定');
+        _loadStopTimeList(_turnModel.id.toString(), false);
+        //_getMachineList();
       }
     }
     void _onRefresh() async {
