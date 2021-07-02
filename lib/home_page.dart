@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_pad_app/Time_page.dart';
 import 'package:flutter_pad_app/model/drop_model.dart';
 import 'package:flutter_pad_app/model/failure_info.dart';
 import 'package:flutter_pad_app/model/malfunction_model.dart';
@@ -55,7 +56,6 @@ class _HomePageState extends State<HomePage> {
   TurningModel _turnModel;
   List<FailureInfo> _faultList;
   Map _checkMap = Map();
-  bool isSelected = false;
 
   Widget build(BuildContext context) {
     return Scaffold(
@@ -315,9 +315,15 @@ class _HomePageState extends State<HomePage> {
     MalfunctionModel malModel;
     if(model is TurningModel){
       turnModel = model;
+      if(model.isProing){
+        type = TableType.production;
+      }else{
+        type = TableType.waitProduction;
+      }
     }
     if(model is MalfunctionModel){
       malModel = model;
+      type = TableType.stopTime;
     }
     var  mouldCode = "";
     if(turnModel?.mouldCode != null){
@@ -539,6 +545,7 @@ class _HomePageState extends State<HomePage> {
                               child: FlatButton(
                                 child: Text('提交', style: constants.style30,),
                                 onPressed: () {
+
                                   _reportFault();
                                 },
                               ),
@@ -582,7 +589,7 @@ class _HomePageState extends State<HomePage> {
               return Row(
                 children: <Widget>[
                   Checkbox(
-                    value: isSelected,
+                    value: _checkMap[info.item[index].faultCode]??false,
                     onChanged: (value) {
                       if (value) {
                         _checkMap[info.item[index].faultCode] = value;
@@ -591,7 +598,6 @@ class _HomePageState extends State<HomePage> {
                           _checkMap.remove(info.item[index].faultCode);
                         }
                       }
-                      isSelected = value;
                       setState(() {
 
                       });
@@ -681,7 +687,7 @@ class _HomePageState extends State<HomePage> {
               _turnModel = turnModel;
               _loadStopTimeList(turnModel.id.toString(),true);
             }else if(title == "提报"){
-
+              _turnModel.musId = int.parse(malModel.id);
               _checkMap.clear();
                 _faultListData();
 
@@ -710,10 +716,12 @@ class _HomePageState extends State<HomePage> {
   }
 
   buildStopTimeView() {
-    showDialog(
-        context: context,
-        barrierDismissible: true,
-        builder: (context) {
+
+    StatefulBuilder stopBuilder = StatefulBuilder(
+        builder:(BuildContext context, void Function(void Function()) stopState) {
+          stopState((){
+
+          });
           return Dialog(
               backgroundColor: Colors.white,
               elevation: 5,
@@ -743,6 +751,49 @@ class _HomePageState extends State<HomePage> {
                   )
               )
           );
+        }
+    );
+  showDialog(
+        context: context,
+        barrierDismissible: true,
+        builder: (context) {
+          return StatefulBuilder(
+              builder:(BuildContext context, void Function(void Function()) stopState) {
+                stopState((){
+
+                });
+                return Dialog(
+                    backgroundColor: Colors.white,
+                    elevation: 5,
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(10))),
+                    child:
+                    Container(
+                      // height: 400,
+                      // width: 600,
+                        margin: EdgeInsets.only(left: 10, right: 10, bottom: 10),
+                        child:
+                        Column(children: [
+                          buildTable(true, TableType.stopTime),
+                          Expanded(child: ScrollConfiguration(
+                            behavior: OverScrollBehavior(),
+                            child: SmartRefresher(
+                              enablePullDown: true,
+                              controller: _refreshController,
+                              onRefresh: _onRefresh,
+                              header: WaterDropHeader(),
+                              child: SingleChildScrollView(
+                                child: buildTable(false, TableType.stopTime),
+                              ),),
+                          )
+                          )
+                        ]
+                        )
+                    )
+                );
+              }
+          );
+
         }
     );
   }
@@ -1502,6 +1553,7 @@ class _HomePageState extends State<HomePage> {
       model.machineCode = _turnModel.machineCode;
       model.proName = _turnModel.proName;
       model.proReID = _turnModel.id;
+      model.musId = _turnModel.musId;
 
       final result = await reportFailure(model);
       if (result != null && result.length > 0) {
@@ -1522,4 +1574,12 @@ class _HomePageState extends State<HomePage> {
       connectivityDispose();
       super.dispose();
     }
+
+  withJobInputType() async {
+    bool rst = await showDialog(
+        context: context,
+        builder: (context) => TimePage(_turnModel));
+    if(rst != null){
+    }
+  }
   }

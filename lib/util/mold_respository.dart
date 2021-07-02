@@ -55,7 +55,7 @@ Future<List<TurningModel>> getProductionList() async{
 }
 //获取停机时间段列表
 Future<List<MalfunctionModel>> getStopTimeList(String recordId) async{
-  Response<Map<String, dynamic>> res = await jsonDio.post('/vFault/selectByNameAndPassword',queryParameters: {"proRecordID":recordId});
+  Response<Map<String, dynamic>> res = await jsonDio.post('/vFault/selectByProRecordID',queryParameters: {"proRecordID":recordId});
   final result = res.data['data'] as List<dynamic>;
   return result.map((item) => MalfunctionModel.fromJsonMap(item)).toList();
 }
