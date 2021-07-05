@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_pad_app/util/custom_behavior.dart';
 import 'package:flutter_pad_app/util/mold_respository.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
@@ -22,108 +23,110 @@ class _AbnormalPageState extends State<AbnormalPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-        margin: EdgeInsets.only(left: 10, right: 10, bottom: 10),
-        child: Column(
-          children: <Widget>[
-            Container(
-              height: 40,
-              margin: EdgeInsets.only(left: 20,top: 10),
-              child: Row(
+   return Scaffold(
+        backgroundColor: Colors.white,
+        body: Container(
+            margin: EdgeInsets.only(left: 30, top: 20, right: 30, bottom: 50),
+            child: Column(
                 children: <Widget>[
-                  Text('异常选择', style: constants.style30),
-                ],
-              ),
-            ),
-            SmartRefresher(
-              enablePullDown: true,
-              controller: _refreshController,
-              onRefresh: _onRefresh,
-              header: WaterDropHeader(),
-              child: SingleChildScrollView(
-                child: Expanded(
-                  child:
-                  ListView.builder(itemBuilder: (context, index) {
-                    return Container(
-                      margin: EdgeInsets.only(top: 10),
-                      color: Colors.white,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Container(
-                            margin: EdgeInsets.only(
-                                left: 30, bottom: 10),
-                            height: 40,
-                            child: Text(_faultList[index].name,
-                                style: constants.blueStyle30),
-                          ),
-                          Expanded(
-                              child:
-                              Container(
-                                margin: EdgeInsets.only(left: 20, right: 20),
-                                child: GridView.builder(
-                                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                                      crossAxisCount: 6,
-                                      mainAxisSpacing: 13,
-                                      crossAxisSpacing: 0,
-                                      childAspectRatio: 15 / 2
-                                  ),
-                                  itemBuilder: (context, innerIndex) {
-                                    return Row(
-                                      children: <Widget>[
-                                        Checkbox(
-                                          value: _checkMap[_faultList[index].item[innerIndex].faultCode] ?? false,
-                                          onChanged: (value) {
-                                            if (value) {
-                                              _checkMap[_faultList[index].item[innerIndex].faultCode] = value;
-                                            } else {
-                                              if (_checkMap.containsKey(_faultList[index].item[innerIndex].faultCode)) {
-                                                _checkMap.remove(_faultList[index].item[innerIndex].faultCode);
-                                              }
-                                            }
-                                            setState(() {
-
-                                            });
-                                          },
-                                        ),
-                                        Container(padding: EdgeInsets.zero,
-                                            margin: EdgeInsets.zero,
-                                            child: Text(
-                                              _faultList[index].item[innerIndex].faultName, style: constants.style20,))
-                                      ],
-                                    );
-                                  },
-                                  itemCount: _faultList[index].item.length,
-                                  physics: NeverScrollableScrollPhysics(),),
-                              )
-                          ),
-                        ],
-                      ),
-                      height: rightListViewCellHeight(
-                          _faultList[index], 6),
-                    );
-                  },
-                    itemCount: 4,
+                  Container(
+                    height: 40,
+                    margin: EdgeInsets.only(left: 20,top: 10),
+                    child: Row(
+                      children: <Widget>[
+                        Text('异常选择', style: constants.style30),
+                      ],
+                    ),
                   ),
-                ),
-              ),),
-            Container(
-                margin: EdgeInsets.only(top: 10),
-                constraints: BoxConstraints.expand(height: 60),
-                child: FlatButton(
-                  child: Text('提交', style: constants.style30,),
-                  onPressed: () {
+                  Expanded(
+                      child: ScrollConfiguration(
+                        behavior: OverScrollBehavior(),
+                        child: SmartRefresher(
+                          enablePullDown: true,
+                          controller: _refreshController,
+                          onRefresh: _onRefresh,
+                          header: WaterDropHeader(),
+                          child: _faultList != null ? ListView.builder(itemBuilder: (context, index) {
+                            return Container(
+                              margin: EdgeInsets.only(top: 10),
+                              color: Colors.white,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: <Widget>[
+                                  Container(
+                                    margin: EdgeInsets.only(
+                                        left: 30, bottom: 10),
+                                    height: 40,
+                                    child: Text(_faultList[index].name,
+                                        style: constants.blueStyle30),
+                                  ),
+                                  Expanded(
+                                      child:
+                                      Container(
+                                        margin: EdgeInsets.only(left: 20, right: 20),
+                                        child: GridView.builder(
+                                          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                                              crossAxisCount: 6,
+                                              mainAxisSpacing: 13,
+                                              crossAxisSpacing: 0,
+                                              childAspectRatio: 15 / 2
+                                          ),
+                                          itemBuilder: (context, innerIndex) {
+                                            return Row(
+                                              children: <Widget>[
+                                                Checkbox(
+                                                  value: _checkMap[_faultList[index].item[innerIndex].faultCode] ?? false,
+                                                  onChanged: (value) {
+                                                    if (value) {
+                                                      _checkMap[_faultList[index].item[innerIndex].faultCode] = value;
+                                                    } else {
+                                                      if (_checkMap.containsKey(_faultList[index].item[innerIndex].faultCode)) {
+                                                        _checkMap.remove(_faultList[index].item[innerIndex].faultCode);
+                                                      }
+                                                    }
+                                                    setState(() {
 
-                    _reportFault();
-                  },
-                ),
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.all(Radius
-                        .circular(5)),
-                    color: Colors.grey
-                )
-            )
-          ],
+                                                    });
+                                                  },
+                                                ),
+                                                Container(padding: EdgeInsets.zero,
+                                                    margin: EdgeInsets.zero,
+                                                    child: Text(
+                                                      _faultList[index].item[innerIndex].faultName, style: constants.style20,))
+                                              ],
+                                            );
+                                          },
+                                          itemCount: _faultList[index].item.length,
+                                          physics: NeverScrollableScrollPhysics(),),
+                                      )
+                                  ),
+                                ],
+                              ),
+                              height: rightListViewCellHeight(
+                                  _faultList[index], 6),
+                            );
+                          },
+                            itemCount: 4,
+                          ):Text(""),
+                        ),
+                      )),
+                  Container(
+                      margin: EdgeInsets.only(top: 10),
+                      constraints: BoxConstraints.expand(height: 60),
+                      child: FlatButton(
+                        child: Text('提交', style: constants.style30,),
+                        onPressed: () {
+
+                          _reportFault();
+                        },
+                      ),
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.all(Radius
+                              .circular(5)),
+                          color: Colors.grey
+                      )
+                  )
+                ])
         )
     );
   }

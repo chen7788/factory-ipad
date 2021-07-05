@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_pad_app/Abnormal_page.dart';
 import 'package:flutter_pad_app/util/custom_behavior.dart';
 import 'package:flutter_pad_app/util/mold_respository.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 import 'model/malfunction_model.dart';
+import 'model/report_model.dart';
 import 'model/turning_model.dart';
 import 'util/const_number.dart' as constants;
 
@@ -24,14 +26,16 @@ class _TimePageState extends State<TimePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-        // height: 400,
-        // width: 600,
-        margin: EdgeInsets.only(left: 10, right: 10, bottom: 10),
-        child: Column(children: [
-          buildTable(true),
-          Expanded(
-              child: ScrollConfiguration(
+    return Scaffold(
+        backgroundColor: Colors.white,
+    body: Container(
+    margin: EdgeInsets.only(left: 30, top: 20, right: 30, bottom: 50),
+    child: Column(
+    children: <Widget>[
+
+      buildTable(true),
+      Expanded(
+          child: ScrollConfiguration(
             behavior: OverScrollBehavior(),
             child: SmartRefresher(
               enablePullDown: true,
@@ -43,13 +47,22 @@ class _TimePageState extends State<TimePage> {
               ),
             ),
           ))
+      ])
+    )
+    );
+    return Container(
+        // height: 400,
+        // width: 600,
+        margin: EdgeInsets.only(left: 10, right: 10, bottom: 10),
+        child: Column(children: [
+
         ]));
   }
 
   Table buildTable(bool isTitle) {
     var map = Map<int, TableColumnWidth>();
-    map[0] = FixedColumnWidth(280.0);
-    map[1] = FixedColumnWidth(270.0);
+    map[0] = FixedColumnWidth(290.0);
+    map[1] = FixedColumnWidth(290.0);
     map[2] = FixedColumnWidth(200.0);
     map[4] = FixedColumnWidth(220.0);
 
@@ -126,6 +139,7 @@ class _TimePageState extends State<TimePage> {
             onTap: () {
               if (title == "提报") {
                 widget.turningModel.musId = int.parse(model.id);
+                withJobInputType();
               }
             }));
   }
