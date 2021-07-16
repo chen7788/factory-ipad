@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="057e6a3e-4d25-439f-9f25-2d8709410ac7" name="Default Changelist" comment="">
+    <list default="true" id="057e6a3e-4d25-439f-9f25-2d8709410ac7" name="Default Changelist" comment="完成异常与停机时间段界面">
       <change beforePath="$PROJECT_DIR$/.dart_tool/package_config.json" beforeDir="false" afterPath="$PROJECT_DIR$/.dart_tool/package_config.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.flutter-plugins-dependencies" beforeDir="false" afterPath="$PROJECT_DIR$/.flutter-plugins-dependencies" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
@@ -17,9 +17,14 @@
       <change beforePath="$PROJECT_DIR$/build/app/outputs/flutter-apk/app-debug.apk" beforeDir="false" afterPath="$PROJECT_DIR$/build/app/outputs/flutter-apk/app-debug.apk" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/app/outputs/flutter-apk/app.apk" beforeDir="false" afterPath="$PROJECT_DIR$/build/app/outputs/flutter-apk/app.apk" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/app/outputs/flutter-apk/app.apk.sha1" beforeDir="false" afterPath="$PROJECT_DIR$/build/app/outputs/flutter-apk/app.apk.sha1" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/app/outputs/repo/io/flutter/plugins/connectivity/connectivity_release/maven-metadata.xml" beforeDir="false" afterPath="$PROJECT_DIR$/build/app/outputs/repo/io/flutter/plugins/connectivity/connectivity_release/maven-metadata.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/app/outputs/repo/io/flutter/plugins/connectivity/connectivity_release/maven-metadata.xml.md5" beforeDir="false" afterPath="$PROJECT_DIR$/build/app/outputs/repo/io/flutter/plugins/connectivity/connectivity_release/maven-metadata.xml.md5" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/app/outputs/repo/io/flutter/plugins/connectivity/connectivity_release/maven-metadata.xml.sha1" beforeDir="false" afterPath="$PROJECT_DIR$/build/app/outputs/repo/io/flutter/plugins/connectivity/connectivity_release/maven-metadata.xml.sha1" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/f872507f30e2ff2523f0f1d19160266e.cache.dill.track.dill" beforeDir="false" afterPath="$PROJECT_DIR$/build/f872507f30e2ff2523f0f1d19160266e.cache.dill.track.dill" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/ios/Runner.build/Release-iphoneos/Runner.build/dgph" beforeDir="false" afterPath="$PROJECT_DIR$/build/ios/Runner.build/Release-iphoneos/Runner.build/dgph" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/home_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/home_page.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/model/turning_model.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/model/turning_model.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/util/dio_util.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/util/dio_util.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/util/mold_respository.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/util/mold_respository.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -169,7 +174,35 @@
       <option name="project" value="LOCAL" />
       <updated>1624609961124</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="修改提报异常">
+      <created>1625126247881</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1625126247881</updated>
+    </task>
+    <task id="LOCAL-00008" summary="抽出异常与停机时间段界面">
+      <created>1625219679854</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1625219679854</updated>
+    </task>
+    <task id="LOCAL-00009" summary="完成异常与停机时间段界面">
+      <created>1625475056628</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1625475056628</updated>
+    </task>
+    <task id="LOCAL-00010" summary="修改调机人员可输入">
+      <created>1626404297904</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1626404297904</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -177,68 +210,78 @@
     <MESSAGE value="初始版本" />
     <MESSAGE value="增加登录界面" />
     <MESSAGE value="增加待生产界面" />
-    <option name="LAST_COMMIT_MESSAGE" value="增加待生产界面" />
+    <MESSAGE value="修改提报异常" />
+    <MESSAGE value="抽出异常与停机时间段界面" />
+    <MESSAGE value="完成异常与停机时间段界面" />
+    <MESSAGE value="修改调机人员可输入" />
+    <option name="LAST_COMMIT_MESSAGE" value="修改调机人员可输入" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="1695" y="493" width="804" height="435" key="#Notifications" timestamp="1622190033884">
-      <screen x="1440" y="91" width="1920" height="1057" />
+    <state x="1695" y="494" width="804" height="435" key="#Notifications" timestamp="1626404312252">
+      <screen x="1440" y="93" width="1920" height="1055" />
     </state>
     <state x="1695" y="493" width="804" height="435" key="#Notifications/0.23.1440.877/1440.91.1920.1057@1440.91.1920.1057" timestamp="1622190033884" />
+    <state x="1695" y="494" key="#Notifications/0.25.1440.875/1440.93.1920.1055@1440.93.1920.1055" timestamp="1626404312252" />
     <state x="1856" y="260" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1619072191749">
       <screen x="1440" y="91" width="1920" height="1057" />
     </state>
     <state x="1856" y="260" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.23.1440.877/1440.91.1920.1057@1440.91.1920.1057" timestamp="1619072191749" />
-    <state x="1553" y="193" width="1687" height="814" key="AVDManager" timestamp="1625036121692">
+    <state x="1553" y="193" width="1687" height="814" key="AVDManager" timestamp="1626415899556">
       <screen x="1440" y="93" width="1920" height="1055" />
     </state>
     <state x="1553" y="191" width="1687" height="815" key="AVDManager/0.23.1440.877/1440.91.1920.1057@1440.91.1920.1057" timestamp="1622190948737" />
-    <state x="1553" y="193" width="1687" height="814" key="AVDManager/0.25.1440.875/1440.93.1920.1055@1440.93.1920.1055" timestamp="1625036121692" />
-    <state x="1981" y="192" key="CommitChangelistDialog2" timestamp="1624609950141">
+    <state x="1553" y="193" width="1687" height="814" key="AVDManager/0.25.1440.875/1440.93.1920.1055@1440.93.1920.1055" timestamp="1626415899555" />
+    <state x="1981" y="192" key="CommitChangelistDialog2" timestamp="1626404296251">
       <screen x="1440" y="93" width="1920" height="1055" />
     </state>
-    <state x="1981" y="192" key="CommitChangelistDialog2/0.25.1440.875/1440.93.1920.1055@1440.93.1920.1055" timestamp="1624609950141" />
-    <state width="613" height="466" key="DebuggerActiveHint" timestamp="1625125040592">
+    <state x="1981" y="192" key="CommitChangelistDialog2/0.25.1440.875/1440.93.1920.1055@1440.93.1920.1055" timestamp="1626404296251" />
+    <state width="613" height="466" key="DebuggerActiveHint" timestamp="1626418083959">
       <screen x="1440" y="93" width="1920" height="1055" />
     </state>
     <state width="385" height="466" key="DebuggerActiveHint/0.23.1440.877/1440.91.1920.1057@1440.91.1920.1057" timestamp="1619492985064" />
-    <state width="613" height="466" key="DebuggerActiveHint/0.25.1440.875/1440.93.1920.1055@1440.93.1920.1055" timestamp="1625125040592" />
-    <state width="1833" height="128" key="GridCell.Tab.0.bottom" timestamp="1625120803641">
+    <state width="613" height="466" key="DebuggerActiveHint/0.25.1440.875/1440.93.1920.1055@1440.93.1920.1055" timestamp="1626418083959" />
+    <state width="1833" height="248" key="GridCell.Tab.0.bottom" timestamp="1626418545477">
       <screen x="1440" y="93" width="1920" height="1055" />
     </state>
     <state width="1743" height="195" key="GridCell.Tab.0.bottom/0.23.1440.877/1440.91.1920.1057@1440.91.1920.1057" timestamp="1622191411456" />
-    <state width="1833" height="128" key="GridCell.Tab.0.bottom/0.25.1440.875/1440.93.1920.1055@1440.93.1920.1055" timestamp="1625120803641" />
-    <state width="1833" height="128" key="GridCell.Tab.0.center" timestamp="1625120803640">
+    <state width="1833" height="248" key="GridCell.Tab.0.bottom/0.25.1440.875/1440.93.1920.1055@1440.93.1920.1055" timestamp="1626418545477" />
+    <state width="1833" height="248" key="GridCell.Tab.0.center" timestamp="1626418545476">
       <screen x="1440" y="93" width="1920" height="1055" />
     </state>
     <state width="1743" height="195" key="GridCell.Tab.0.center/0.23.1440.877/1440.91.1920.1057@1440.91.1920.1057" timestamp="1622191411455" />
-    <state width="1833" height="128" key="GridCell.Tab.0.center/0.25.1440.875/1440.93.1920.1055@1440.93.1920.1055" timestamp="1625120803640" />
-    <state width="1833" height="128" key="GridCell.Tab.0.left" timestamp="1625120803639">
+    <state width="1833" height="248" key="GridCell.Tab.0.center/0.25.1440.875/1440.93.1920.1055@1440.93.1920.1055" timestamp="1626418545476" />
+    <state width="1833" height="248" key="GridCell.Tab.0.left" timestamp="1626418545475">
       <screen x="1440" y="93" width="1920" height="1055" />
     </state>
     <state width="1743" height="195" key="GridCell.Tab.0.left/0.23.1440.877/1440.91.1920.1057@1440.91.1920.1057" timestamp="1622191411455" />
-    <state width="1833" height="128" key="GridCell.Tab.0.left/0.25.1440.875/1440.93.1920.1055@1440.93.1920.1055" timestamp="1625120803639" />
-    <state width="1833" height="128" key="GridCell.Tab.0.right" timestamp="1625120803640">
+    <state width="1833" height="248" key="GridCell.Tab.0.left/0.25.1440.875/1440.93.1920.1055@1440.93.1920.1055" timestamp="1626418545475" />
+    <state width="1833" height="248" key="GridCell.Tab.0.right" timestamp="1626418545476">
       <screen x="1440" y="93" width="1920" height="1055" />
     </state>
     <state width="1743" height="195" key="GridCell.Tab.0.right/0.23.1440.877/1440.91.1920.1057@1440.91.1920.1057" timestamp="1622191411456" />
-    <state width="1833" height="128" key="GridCell.Tab.0.right/0.25.1440.875/1440.93.1920.1055@1440.93.1920.1055" timestamp="1625120803640" />
+    <state width="1833" height="248" key="GridCell.Tab.0.right/0.25.1440.875/1440.93.1920.1055@1440.93.1920.1055" timestamp="1626418545476" />
     <state x="1879" y="264" key="SettingsEditor" timestamp="1624609794076">
       <screen x="1440" y="93" width="1920" height="1055" />
     </state>
     <state x="1879" y="262" key="SettingsEditor/0.23.1440.877/1440.91.1920.1057@1440.91.1920.1057" timestamp="1622190122878" />
     <state x="1879" y="264" key="SettingsEditor/0.25.1440.875/1440.93.1920.1055@1440.93.1920.1055" timestamp="1624609794076" />
-    <state x="2022" y="347" key="Vcs.Push.Dialog.v2" timestamp="1624609980122">
+    <state x="2022" y="347" key="Vcs.Push.Dialog.v2" timestamp="1626404357738">
       <screen x="1440" y="93" width="1920" height="1055" />
     </state>
-    <state x="2022" y="347" key="Vcs.Push.Dialog.v2/0.25.1440.875/1440.93.1920.1055@1440.93.1920.1055" timestamp="1624609980122" />
+    <state x="2022" y="347" key="Vcs.Push.Dialog.v2/0.25.1440.875/1440.93.1920.1055@1440.93.1920.1055" timestamp="1626404357738" />
+    <state width="884" height="527" key="XDebugger.FullValuePopup" timestamp="1626418129229">
+      <screen x="1440" y="93" width="1920" height="1055" />
+    </state>
+    <state width="884" height="527" key="XDebugger.FullValuePopup/0.25.1440.875/1440.93.1920.1055@1440.93.1920.1055" timestamp="1626418129229" />
     <state x="2090" y="353" width="615" height="490" key="find.popup" timestamp="1619079288287">
       <screen x="1440" y="91" width="1920" height="1057" />
     </state>
     <state x="2090" y="353" width="615" height="490" key="find.popup/0.23.1440.877/1440.91.1920.1057@1440.91.1920.1057" timestamp="1619079288287" />
-    <state x="2042" y="291" key="run.anything.popup" timestamp="1622190670572">
-      <screen x="1440" y="91" width="1920" height="1057" />
+    <state x="2042" y="293" key="run.anything.popup" timestamp="1625476124744">
+      <screen x="1440" y="93" width="1920" height="1055" />
     </state>
     <state x="2042" y="291" key="run.anything.popup/0.23.1440.877/1440.91.1920.1057@1440.91.1920.1057" timestamp="1622190670572" />
+    <state x="2042" y="293" key="run.anything.popup/0.25.1440.875/1440.93.1920.1055@1440.93.1920.1055" timestamp="1625476124744" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

@@ -370,7 +370,7 @@ class _HomePageState extends State<HomePage> {
                     decoration: InputDecoration(border: InputBorder.none),
                     controller: cycleController,
                     style: constants.style20,
-                    keyboardType: TextInputType.numberWithOptions(),
+                    keyboardType: TextInputType.number,
                     inputFormatters: [
                       WhitelistingTextInputFormatter.digitsOnly
                     ],),
@@ -391,7 +391,7 @@ class _HomePageState extends State<HomePage> {
 
   Widget buildText(bool isPop, String title, TextEditingController controller,
       String name, bool isNum) {
-    if(controller != null && controller.text != name){
+    if(title=="模号"){
       controller.text = name;
     }
     return Container(
@@ -909,7 +909,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   _productSelectedData(bool isKey) async {
-    final result = await getProductList(productController.text);
+    final result = await getProductList(productController.text,widget.name);
     if (result != null) {
       if (isKey) {
         buildDialog(result);
@@ -999,11 +999,9 @@ class _HomePageState extends State<HomePage> {
         person1Controller.text = '';
         person2Controller.text = '';
         cycleController.text = '';
-        _materialList = null;
         setState(() {
-
+          _materialList = null;
         });
-        _getMachineList(true);
       } else {
         Fluttertoast.showToast(msg: '调机失败', fontSize: 13);
       }
@@ -1036,6 +1034,7 @@ class _HomePageState extends State<HomePage> {
       _getStartTurning();
     }
     _updateTurning(TurningModel model, String title) async {
+    model.factory = widget.name;
       String str = '[' + JSON.jsonEncode(model) + ']';
       final result = await upDateTurning(str);
       if (result != null && result.length > 0) {
@@ -1093,7 +1092,12 @@ class _HomePageState extends State<HomePage> {
       }
     }
     void _onRefresh() async {
-      await _getMachineList(false);
+    if(_isLeftPage){
+       _getMachineList(false);
+    }else{
+       _waitProductionList();
+    }
+
       _refreshController.refreshCompleted();
     }
     @override

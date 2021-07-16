@@ -30,8 +30,8 @@ Future<List<MaterialModel>> getMaterialList(String materialId) async{
   return result.map((item) => MaterialModel.fromJsonMap(item)).toList();
 }
 //获取品名下拉列表
-Future<List<ProductInfo>> getProductList(String model) async{
-  Response<Map<String, dynamic>> res = await formDio.post('/productInfo/selectProductInfo',data: {"proName":model});
+Future<List<ProductInfo>> getProductList(String model,String factory) async{
+  Response<Map<String, dynamic>> res = await formDio.post('/productInfo/selectProductInfo',queryParameters: {"proName":model,"factory":factory});
   final result = res.data['data'] as List<dynamic>;
   return result.map((item) => ProductInfo.fromJsonMap(item)).toList();
 }

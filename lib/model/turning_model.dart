@@ -24,6 +24,7 @@ class TurningModel {
   int mQty;
   bool isProing;
   int musId;
+  String factory;
 
   TurningModel.fromJsonMap(Map<String, dynamic> map):
         classes = map["classes"],
@@ -49,7 +50,9 @@ class TurningModel {
         useCavityQty = map["useCavityQty"],
         useCycleTime = map["useCycleTime"],
         isProing = map["isProing"],
+        factory = "",
         musId = 0;
+
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
@@ -77,7 +80,7 @@ class TurningModel {
     data['useCycleTime'] = useCycleTime;
     data['isProing'] = isProing;
     data['musId'] = musId;
-
+    data['factory'] = factory;
     return data;
   }
 }
