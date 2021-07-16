@@ -34,7 +34,7 @@ class _LoginPageState extends State<LoginPage> {
                     children: [
                       buildRow(_accountController,'登录账号'),
                       buildRow(_pwdController,'登录密码'),
-                      buildRow(_pwdController,'工厂        ',isDrop: true)
+                      //buildRow(_pwdController,'工厂        ',isDrop: true)
                     ],
                   ),
                 ),
@@ -122,7 +122,7 @@ class _LoginPageState extends State<LoginPage> {
     final result = await loginRequest(_accountController.text, _pwdController.text);
     if (result != null && result.length > 0) {
       Navigator.push(context, MaterialPageRoute(builder: (_){
-        return HomePage(_machineValue);
+        return HomePage(result);
       }));
     }
   }

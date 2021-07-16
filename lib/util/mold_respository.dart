@@ -14,8 +14,8 @@ import 'dart:convert' as JSON;
 //登录
 Future<String> loginRequest(String account,String pwd) async{
   Response<Map<String, dynamic>> res = await jsonDio.post('/user/selectByNameAndPassword',data: {'name':account,'password':pwd});
-  final result = res.data['message'] as String;
-  return result;
+  final result = res.data['data'] as Map<String, dynamic>;
+  return result["companyName"];
 }
 //获取下拉列表
 Future<List<DropModel>> getDropList(String name) async{
@@ -42,14 +42,14 @@ Future<List<TurningModel>> getTurningList() async{
   return result.map((item) => TurningModel.fromJsonMap(item)).toList();
 }
 //获取待生产机台列表
-Future<List<TurningModel>> getWaitProductionList() async{
-  Response<Map<String, dynamic>> res = await jsonDio.post('/productionRecord/selectStayProductionRecord',data: null);
+Future<List<TurningModel>> getWaitProductionList(String model) async{
+  Response<Map<String, dynamic>> res = await jsonDio.post('/productionRecord/selectStayProductionRecord',queryParameters: {"factory":model});
   final result = res.data['data'] as List<dynamic>;
   return result.map((item) => TurningModel.fromJsonMap(item)).toList();
 }
 //获取生产中机台列表
-Future<List<TurningModel>> getProductionList() async{
-  Response<Map<String, dynamic>> res = await jsonDio.post('/productionRecord/selectWorkProductionRecord',data: null);
+Future<List<TurningModel>> getProductionList(String model) async{
+  Response<Map<String, dynamic>> res = await jsonDio.post('/productionRecord/selectWorkProductionRecord',queryParameters: {"factory":model});
   final result = res.data['data'] as List<dynamic>;
   return result.map((item) => TurningModel.fromJsonMap(item)).toList();
 }

@@ -4,9 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_pad_app/Time_page.dart';
 import 'package:flutter_pad_app/model/drop_model.dart';
 import 'package:flutter_pad_app/model/failure_info.dart';
-import 'package:flutter_pad_app/model/malfunction_model.dart';
 import 'package:flutter_pad_app/model/product_info.dart';
-import 'package:flutter_pad_app/model/report_model.dart';
 import 'package:flutter_pad_app/model/turning_model.dart';
 import 'package:flutter_pad_app/util/custom_behavior.dart';
 import 'package:flutter_pad_app/util/mold_respository.dart';
@@ -52,20 +50,19 @@ class _HomePageState extends State<HomePage> {
   final holesController = TextEditingController();
   final cycleController = TextEditingController();
   final moldController = TextEditingController();
+  final person1Controller = TextEditingController();
+  final person2Controller = TextEditingController();
   bool _isLeftPage = true;
-  TurningModel _turnModel;
-  List<FailureInfo> _faultList;
-  Map _checkMap = Map();
 
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color.fromRGBO(153, 153, 153, 1),
       body: Container(
-        margin: EdgeInsets.only(left: 20, top: 20, right: 30, bottom: 10),
+        margin: EdgeInsets.only(left: 20, top: 20, right: 30, bottom: 50),
         child: Column(
           children: <Widget>[
             Expanded(
-              child: buildLeftView(),
+                child: buildLeftView()
             )
           ],
         ),
@@ -88,20 +85,22 @@ class _HomePageState extends State<HomePage> {
               children: <Widget>[
                 buildHeader(true, '调机'),
                 buildDrop('机台'),
-                buildText(true, '品名', productController, '', false),
+                buildText(true, '品名', productController, productController.text, false),
                 buildDrop('用料'),
                 // buildText(false,'用料',null,_productInfo !=null?_productInfo.material:'',false),
                 buildText(false, '模号', moldController,
-                    _productInfo != null ? mouldCode : '', false),
+                    _productInfo != null ? _productInfo?.mouldCode : '', false),
                 buildText(false, '穴数', null, _productInfo != null
                     ? _productInfo.stdCavityQty.toString()
                     : '', false),
-                buildText(false, '生产穴数', holesController, '', true),
+                buildText(false, '生产穴数', holesController,'', true),
                 buildTextAndTextF(),
                 buildText(false, '流道类型', null,
                     _productInfo != null ? _productInfo.flowType : '', false),
-                buildDrop('调机职员'),
-                buildDrop('生产职员'),
+                buildText(true, '调机职员', person1Controller, '', false),
+                buildText(true, '生产职员', person2Controller, '', false),
+                // buildDrop('调机职员'),
+                // buildDrop('生产职员'),
                 Container(
                   width: 200,
                   margin: EdgeInsets.only(top: 30),
@@ -167,7 +166,7 @@ class _HomePageState extends State<HomePage> {
                   onPressed: () {
                     if (!_isLeftPage) {
                       if(_productionList == null){
-                        _getMachineList();
+                        _getMachineList(false);
                       }
                       _turningList = _productionList;
                       setState(() {
@@ -275,243 +274,6 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
- String getBeginTime(String time){
-    if(time == null || time == ""){
-      return "";
-    }
-    String str1 = time.substring(0,10);
-    String str2 = time.substring(11,19);
-    return str1 + " " + str2;
-  }
-
-  intWithBool(bool isError) {
-    if (isError == null) {
-      return 0;
-    }
-    if (isError) {
-      return 1;
-    }
-    return 0;
-  }
-
-  // buildRightView() {
-  //
-  //   showDialog(
-  //       context: context,
-  //       barrierDismissible: true,
-  //       builder: (context) {
-  //         return StatefulBuilder(
-  //           builder:(BuildContext context, void Function(void Function()) setState) {
-  //             return Dialog(
-  //                 backgroundColor: Colors.white,
-  //                 elevation: 5,
-  //                 shape: RoundedRectangleBorder(
-  //                     borderRadius: BorderRadius.all(Radius.circular(10))),
-  //                 child:
-  //                 Container(
-  //                   // height: 400,
-  //                   // width: 600,
-  //                     margin: EdgeInsets.only(left: 10, right: 10, bottom: 10),
-  //                     child: Column(
-  //                       children: <Widget>[
-  //                         Container(
-  //                           height: 40,
-  //                           margin: EdgeInsets.only(left: 20,top: 10),
-  //                           child: Row(
-  //                             children: <Widget>[
-  //                               Text('异常选择', style: constants.style30),
-  //                               // Container(
-  //                               //   height: 45,
-  //                               //   width: 300,
-  //                               //   margin: EdgeInsets.only(left: 30),
-  //                               //   alignment: Alignment.centerLeft,
-  //                               //   padding: EdgeInsets.only(left: 10),
-  //                               //   decoration: BoxDecoration(
-  //                               //       border: Border.all(width: 1,
-  //                               //           color: Colors.black),
-  //                               //       color: Colors.white
-  //                               //   ),
-  //                               //   child: Text(_turnModel == null ? '' : _turnModel
-  //                               //       .machineCode, style: constants.style30),
-  //                               // )
-  //                             ],
-  //                           ),
-  //                         ),
-  //                         Expanded(
-  //                           child:
-  //                           ListView.builder(itemBuilder: (context, index) {
-  //                             return Container(
-  //                               margin: EdgeInsets.only(top: 10),
-  //                               color: Colors.white,
-  //                               child: Column(
-  //                                 crossAxisAlignment: CrossAxisAlignment.start,
-  //                                 children: <Widget>[
-  //                                   Container(
-  //                                     margin: EdgeInsets.only(
-  //                                         left: 30, bottom: 10),
-  //                                     height: 40,
-  //                                     child: Text(_faultList[index].name,
-  //                                         style: constants.blueStyle30),
-  //                                   ),
-  //                                   Expanded(
-  //                                       child:
-  //                                       Container(
-  //                                         margin: EdgeInsets.only(left: 20, right: 20),
-  //                                         child: GridView.builder(
-  //                                           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-  //                                               crossAxisCount: 6,
-  //                                               mainAxisSpacing: 13,
-  //                                               crossAxisSpacing: 0,
-  //                                               childAspectRatio: 15 / 2
-  //                                           ),
-  //                                           itemBuilder: (context, innerIndex) {
-  //                                             return Row(
-  //                                               children: <Widget>[
-  //                                                 Checkbox(
-  //                                                   value: _checkMap[_faultList[index].item[innerIndex].faultCode] ?? false,
-  //                                                   onChanged: (value) {
-  //                                                     if (value) {
-  //                                                       _checkMap[_faultList[index].item[innerIndex].faultCode] = value;
-  //                                                     } else {
-  //                                                       if (_checkMap.containsKey(_faultList[index].item[innerIndex].faultCode)) {
-  //                                                         _checkMap.remove(_faultList[index].item[innerIndex].faultCode);
-  //                                                       }
-  //                                                     }
-  //                                                     setState(() {
-  //
-  //                                                     });
-  //                                                   },
-  //                                                 ),
-  //                                                 Container(padding: EdgeInsets.zero,
-  //                                                     margin: EdgeInsets.zero,
-  //                                                     child: Text(
-  //                                                       _faultList[index].item[innerIndex].faultName, style: constants.style20,))
-  //                                               ],
-  //                                             );
-  //                                           },
-  //                                           itemCount: _faultList[index].item.length,
-  //                                           physics: NeverScrollableScrollPhysics(),),
-  //                                       )
-  //                                   ),
-  //                                 ],
-  //                               ),
-  //                               height: rightListViewCellHeight(
-  //                                   _faultList[index], 6),
-  //                             );
-  //                           },
-  //                             itemCount: 4,
-  //                           ),
-  //                         ),
-  //                         // Container(
-  //                         //   constraints: BoxConstraints.expand(height: 135),
-  //                         //   margin: EdgeInsets.only(top: 20),
-  //                         //   child: Row(
-  //                         //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-  //                         //     children: <Widget>[
-  //                         //       Expanded(
-  //                         //         child: Container(
-  //                         //           height: 135,
-  //                         //           margin: EdgeInsets.only(right: 100),
-  //                         //           color: Colors.black,
-  //                         //           child: Column(
-  //                         //             crossAxisAlignment: CrossAxisAlignment.start,
-  //                         //             children: <Widget>[
-  //                         //               Container(
-  //                         //                 margin: EdgeInsets.only(
-  //                         //                     left: 30, top: 15),
-  //                         //                 height: 35,
-  //                         //                 child: Text(
-  //                         //                     _faultList[_faultList.length - 1]
-  //                         //                         .name,
-  //                         //                     style: constants.blueStyle30),
-  //                         //               ),
-  //                         //               buildGridView(
-  //                         //                   _faultList[_faultList.length - 1]),
-  //                         //             ],
-  //                         //           ),
-  //                         //         ),
-  //                         //       ),
-  //                         //
-  //                         //     ],
-  //                         //   ),
-  //                         // ),
-  //                         Container(
-  //                             margin: EdgeInsets.only(top: 10),
-  //                             constraints: BoxConstraints.expand(height: 60),
-  //                             child: FlatButton(
-  //                               child: Text('提交', style: constants.style30,),
-  //                               onPressed: () {
-  //
-  //                                 _reportFault();
-  //                               },
-  //                             ),
-  //                             decoration: BoxDecoration(
-  //                                 borderRadius: BorderRadius.all(Radius
-  //                                     .circular(5)),
-  //                                 color: Colors.grey
-  //                             )
-  //                         )
-  //                       ],
-  //                     )
-  //                 )
-  //             );
-  //           }
-  //         );
-  //       }
-  //   );
-  //
-  //   // if(_faultList == null || _faultList.length==0){
-  //   //   return Container(
-  //   //       width: 1920,
-  //   //       color: Colors.white,
-  //   //       child: Center(child: Text('没有数据'),),
-  //   //   );
-  //   // }
-  // }
-
-  Widget buildGridView(FailureInfo info) {
-    return Expanded(
-        child:
-        Container(
-          margin: EdgeInsets.only(left: 20, right: 20),
-          child: GridView.builder(
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 6,
-                mainAxisSpacing: 13,
-                crossAxisSpacing: 0,
-                childAspectRatio: 15 / 2
-            ),
-            itemBuilder: (context, index) {
-              return Row(
-                children: <Widget>[
-                  Checkbox(
-                    value: _checkMap[info.item[index].faultCode]??false,
-                    onChanged: (value) {
-                      if (value) {
-                        _checkMap[info.item[index].faultCode] = value;
-                      } else {
-                        if (_checkMap.containsKey(info.item[index].faultCode)) {
-                          _checkMap.remove(info.item[index].faultCode);
-                        }
-                      }
-                      setState(() {
-
-                      });
-                    },
-                  ),
-                  Container(padding: EdgeInsets.zero,
-                      margin: EdgeInsets.zero,
-                      child: Text(
-                        info.item[index].faultName, style: constants.style20,))
-                ],
-              );
-            },
-            itemCount: info.item.length,
-            physics: NeverScrollableScrollPhysics(),),
-        )
-    );
-  }
-
   Widget buildTableCell(String name, bool isTitle) {
     return Container(height: isTitle ? 60 : 55,
         child: Center(child: Text(name==null?"":name, style: constants.style20)),
@@ -567,16 +329,6 @@ class _HomePageState extends State<HomePage> {
           }
         })
     );
-  }
-
-  double rightListViewCellHeight(FailureInfo info, int col) {
-    int count = info.item.length;
-    int row = count ~/ col;
-    int num = count % col;
-    if (row == 3 && num > 0) {
-      return 280;
-    }
-    return 230;
   }
 
   Widget buildHeader(bool isBottom, String title) {
@@ -639,6 +391,9 @@ class _HomePageState extends State<HomePage> {
 
   Widget buildText(bool isPop, String title, TextEditingController controller,
       String name, bool isNum) {
+    if(controller != null && controller.text != name){
+      controller.text = name;
+    }
     return Container(
         margin: EdgeInsets.only(left: 30, right: 30, top: 23),
         height: 45,
@@ -656,13 +411,29 @@ class _HomePageState extends State<HomePage> {
                       controller: controller,
                       style: constants.style20,
                       onSubmitted: (value) {
-                        controller.text = value;
                         if (title == '品名' && value != '') {
                           if (value.length > 24) {
                             Fluttertoast.showToast(
                                 msg: '品名长度应大于0小于24', fontSize: 13);
                             return;
                           }
+                          productController.text = value;
+                          ProductInfo info;
+                          for (ProductInfo item in _productList){
+                            if (item.proName == value){
+                              info = item;
+                              break;
+                            }
+                          }
+                          if (info == null){
+                            Fluttertoast.showToast(
+                                msg: '输入品名不存在，请重新输入或点击右边下拉按钮选择...', fontSize: 13);
+                            return;
+                          }
+                          _materialSelectedData(info.proName);
+                          setState(() {
+                            _productInfo = info;
+                          });
                         }
                       },
                       onChanged: (value) {
@@ -674,13 +445,13 @@ class _HomePageState extends State<HomePage> {
                           } else {
                             var list = List<ProductInfo>();
                             for (ProductInfo info in _productAllList) {
-                              if (info.proName.contains(value)) {
+                              if (info.proName.indexOf(value) != -1) {
                                 list.add(info);
                               }
                             }
-                            setState(() {
+                            //setState(() {
                               _productList = list;
-                            });
+                            //});
                           }
                         }
                       },
@@ -702,26 +473,37 @@ class _HomePageState extends State<HomePage> {
               height: 45,
               margin: EdgeInsets.only(left: 30),
               child: PopupMenuButton(
+
                   icon: Image.asset("res/images/201.png"),
                   onSelected: (result) {
-                    productController.text = result;
-                    if (_productList != null) {
-                      _materialSelectedData(result);
-                      for (ProductInfo product in _productList) {
-                        if (product.proName == result) {
-                          setState(() {
-                            _productInfo = product;
-                            holesController.text = product.stdCavityQty
-                                .toString();
-                            cycleController.text = product.cycleTime.toString();
-                          });
+                    if (title == "品名"){
+                      productController.text = result;
+                      ProductInfo info;
+                      for (ProductInfo item in _productList){
+                        if (item.proName == result){
+                          info = item;
                           break;
                         }
                       }
+                      _materialSelectedData(info.proName);
+                      setState(() {
+                        _productInfo = info;
+                      });
+                    }else if(title == "调机职员"){
+                      setState(() {
+                        person1Controller.text = result;
+                      });
+
                     }
+                    else if(title == "生产职员"){
+                      setState(() {
+                        person2Controller.text = result;
+                      });
+                    }
+
                   },
                   itemBuilder: (BuildContext context) {
-                    return buildPopMenuItems();
+                    return buildPopMenuItems(title);
                   }
               ),
             ) : Text(''),
@@ -829,19 +611,32 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
-  List<PopupMenuEntry> buildPopMenuItems() {
+  List<PopupMenuEntry> buildPopMenuItems(String title) {
     List<PopupMenuItem> list = List();
-    if (_productList == null) {
+    if (title == "品名"){
+      if (_productList == null) {
+        return list;
+      }
+      _productList.forEach((element) {
+        PopupMenuItem popupMenuItem = PopupMenuItem(
+          value: element.proName,
+          child: Text(element.proName, style: TextStyle(fontSize: 20)),
+        );
+        list.add(popupMenuItem);
+      });
       return list;
     }
-    _productList.forEach((element) {
-      PopupMenuItem popupMenuItem = PopupMenuItem(
-        value: element.proName,
-        child: Text(element.proName, style: TextStyle(fontSize: 20)),
-      );
-      list.add(popupMenuItem);
-    });
-    return list;
+      if (_personDropList == null) {
+        return list;
+      }
+      _personDropList.forEach((element) {
+        PopupMenuItem popupMenuItem = PopupMenuItem(
+          value: element.name,
+          child: Text(element.name, style: TextStyle(fontSize: 20)),
+        );
+        list.add(popupMenuItem);
+      });
+      return list;
   }
 
   List<DropdownMenuItem> buildDropMenuItems(String type) {
@@ -858,6 +653,7 @@ class _HomePageState extends State<HomePage> {
           list.add(dropdownMenuItem);
         });
       }
+      return list;
     } else if (type == '用料') {
       if (_materialList == null) {
         return list;
@@ -869,33 +665,41 @@ class _HomePageState extends State<HomePage> {
             value: element.materialName,);
           list.add(dropdownMenuItem);
         });
-      }
-    } else {
-      if (_personDropList == null) {
         return list;
-      } else {
-        _personDropList.forEach((element) {
-          DropdownMenuItem dropdownMenuItem = DropdownMenuItem(child: Container(
-              padding: EdgeInsets.only(left: 10),
-              child: Text(element.name, style: constants.style20,)),
-            value: element.name,);
-          list.add(dropdownMenuItem);
-        });
       }
     }
+    // else {
+    //   if (_personDropList == null) {
+    //     return list;
+    //   } else {
+    //     _personDropList.forEach((element) {
+    //       DropdownMenuItem dropdownMenuItem = DropdownMenuItem(child: Container(
+    //           padding: EdgeInsets.only(left: 10),
+    //           child: Text(element.name, style: constants.style20,)),
+    //         value: element.name,);
+    //       list.add(dropdownMenuItem);
+    //     });
+    //   }
+    // }
 
     return list;
   }
 
   getValueWithTitle(String title) {
     if (title == '机台') {
-      return _machineValue;
+      if (_machineDropList != null && _machineDropList.length > 0){
+        _machineValue =  _machineDropList[0].machineCode;
+      }
+      return _machineValue != null ? _machineValue :'';
     } else if (title == '调机职员') {
       return _turningValue;
     } else if (title == '生产职员') {
       return _produceValue;
     } else {
-      return _materialValue;
+      if (_materialList != null && _materialList.length > 0){
+        _materialValue = _materialList[0].materialName;
+      }
+      return _materialValue != null ? _materialValue :'';
     }
   }
 
@@ -912,6 +716,16 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget buildDrop(String title) {
+    var isShow = true;
+    if (title == "机台"){
+      if(_machineDropList == null || _machineDropList.length == 0){
+        isShow = false;
+      }
+    }else{
+      if(_materialList == null || _materialList.length == 0){
+        isShow = false;
+      }
+    }
     return Container(
       margin: EdgeInsets.only(left: 30, right: 30, top: 20),
       height: 50,
@@ -923,7 +737,7 @@ class _HomePageState extends State<HomePage> {
               height: 50,
               margin: EdgeInsets.only(left: 30),
               child: DropdownButtonHideUnderline(
-                child: DropdownButton(items: buildDropMenuItems(title),
+                child: isShow?DropdownButton(items: buildDropMenuItems(title),
                     value: getValueWithTitle(title),
                     hint: Container(padding: EdgeInsets.only(left: 10),
                         child: Text(getHintWithTitle(title),
@@ -948,10 +762,12 @@ class _HomePageState extends State<HomePage> {
                         } else if (title == '生产职员') {
                           _produceValue = value;
                         } else {
-                          _materialValue = value;
+                          setState(() {
+                            _materialValue = value;
+                          });
                         }
                       });
-                    }),
+                    }):Text(''),
               ),
               decoration: BoxDecoration(
                   border: Border.all(width: 1, color: Colors.black)
@@ -1078,7 +894,7 @@ class _HomePageState extends State<HomePage> {
     // TODO: implement initState
     super.initState();
     initConnectivity();
-    _getMachineList();
+    _getMachineList(true);
   }
 
   _machineSelectedData() async {
@@ -1129,24 +945,25 @@ class _HomePageState extends State<HomePage> {
     if (result != null) {
       setState(() {
         _materialList = result;
-        _materialValue = null;
       });
     }
   }
 
-  _getMachineList() async {
-    final result = await getProductionList();
+  _getMachineList(bool isMachine) async {
+    final result = await getProductionList(widget.name);
     if (result != null) {
       _productionList = result;
       setState(() {
         _turningList = result;
       });
-      _machineSelectedData();
+      if (isMachine){
+        _machineSelectedData();
+      }
     }
   }
 
   _waitProductionList() async {
-    final result = await getWaitProductionList();
+    final result = await getWaitProductionList(widget.name);
     if (result != null) {
       _waitList = result;
       setState(() {
@@ -1159,7 +976,7 @@ class _HomePageState extends State<HomePage> {
     _getStartTurning() async {
       TurningModel model = TurningModel.fromJsonMap({});
       model.cycleTime = _productInfo.cycleTime;
-      model.debugPerson = _turningValue;
+      model.debugPerson = person1Controller.text;
       model.flowType = _productInfo.flowType;
       model.id = _productInfo.id;
       model.isAuto = _autoCheckValue;
@@ -1175,8 +992,18 @@ class _HomePageState extends State<HomePage> {
       final result = await startTurning(model);
       if (result == '调机成功。') {
         Fluttertoast.showToast(msg: '调机成功', fontSize: 13);
-        productController.text = "";
-        _getMachineList();
+        productController.text = '';
+        _machineValue = '';
+        _materialValue = '';
+        _productInfo = null;
+        person1Controller.text = '';
+        person2Controller.text = '';
+        cycleController.text = '';
+        _materialList = null;
+        setState(() {
+
+        });
+        _getMachineList(true);
       } else {
         Fluttertoast.showToast(msg: '调机失败', fontSize: 13);
       }
@@ -1198,11 +1025,11 @@ class _HomePageState extends State<HomePage> {
         Fluttertoast.showToast(msg: '请选择用料', fontSize: 13);
         return;
       }
-      if (_turningValue == null || _turningValue == '') {
+      if (person1Controller.text == null || person1Controller.text == '') {
         Fluttertoast.showToast(msg: '请选择调机职员', fontSize: 13);
         return;
       }
-      if (_produceValue == null || _produceValue == '') {
+      if (person2Controller.text == null || person2Controller.text == '') {
         Fluttertoast.showToast(msg: '请选择生产职员', fontSize: 13);
         return;
       }
@@ -1242,7 +1069,7 @@ class _HomePageState extends State<HomePage> {
             break;
           }
         }
-        _getMachineList();
+        _getMachineList(false);
         setState(() {
           _isLeftPage = true;
         });
@@ -1266,7 +1093,7 @@ class _HomePageState extends State<HomePage> {
       }
     }
     void _onRefresh() async {
-      await _getMachineList();
+      await _getMachineList(false);
       _refreshController.refreshCompleted();
     }
     @override
