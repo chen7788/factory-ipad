@@ -370,9 +370,9 @@ class _HomePageState extends State<HomePage> {
                     decoration: InputDecoration(border: InputBorder.none),
                     controller: cycleController,
                     style: constants.style20,
-                    keyboardType: TextInputType.number,
+                    keyboardType: TextInputType.numberWithOptions(),
                     inputFormatters: [
-                      WhitelistingTextInputFormatter.digitsOnly
+                      //WhitelistingTextInputFormatter.digitsOnly
                     ],),
                   decoration: BoxDecoration(
                     border: Border.all(width: 1, color: Colors.black),
@@ -688,7 +688,9 @@ class _HomePageState extends State<HomePage> {
   getValueWithTitle(String title) {
     if (title == '机台') {
       if (_machineDropList != null && _machineDropList.length > 0){
-        _machineValue =  _machineDropList[0].machineCode;
+        if (_machineValue == null || _machineValue == ''){
+          _machineValue =  _machineDropList[0].machineCode;
+        }
       }
       return _machineValue != null ? _machineValue :'';
     } else if (title == '调机职员') {
@@ -697,7 +699,9 @@ class _HomePageState extends State<HomePage> {
       return _produceValue;
     } else {
       if (_materialList != null && _materialList.length > 0){
-        _materialValue = _materialList[0].materialName;
+        if (_materialValue == null || _materialValue == ''){
+          _materialValue = _materialList[0].materialName;
+        }
       }
       return _materialValue != null ? _materialValue :'';
     }

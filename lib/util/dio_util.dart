@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
-final baseUrl = "http://192.168.70.12:8080";
+final baseUrl = "http://192.168.1.37:8080";
 //var options = BaseOptions(baseUrl: baseUrl);// // //http://192.168.70.12:8080
 
 BaseOptions buildOptions(bool isJson) {
